@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>多选</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.yy{--p:#6366F1;--ph:#4F46E5;--ink:#18181B;--ink2:#27272A;--line2:#D4D4D8;--font:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC',system-ui,sans-serif}
+.cbx-group{display:flex;flex-direction:column;gap:8px;font-family:var(--font);-webkit-font-smoothing:antialiased}
+.cbx-label{font-size:12.5px;color:var(--ink2);font-weight:600;line-height:1.4}
+.cbx-wrap{display:flex}
+.cbx{position:relative;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);line-height:1.45;padding:1px 0}
+.cbx-in{position:absolute;left:0;top:0;width:16px;height:16px;margin:0;opacity:0;cursor:pointer}
+.cbx .box{width:16px;height:16px;box-sizing:border-box;border-radius:4px;border:1.5px solid var(--line2);background:#FFFFFF;display:flex;align-items:center;justify-content:center;transition:background .14s ease,border-color .14s ease,box-shadow .14s ease;flex:0 0 auto;color:#FFFFFF}
+.cbx .box svg{opacity:0;transform:scale(.7);transition:opacity .12s ease,transform .12s ease}
+.cbx[data-checked="true"] .box{background:var(--p);border-color:var(--p)}
+.cbx[data-checked="true"] .box svg{opacity:1;transform:scale(1)}
+.cbx:not([data-disabled="true"]):hover .box{border-color:var(--p)}
+.cbx-in:focus-visible + .box{box-shadow:0 0 0 3px rgba(99,102,241,.20);border-color:var(--p)}
+.cbx[data-disabled="true"]{opacity:.5;cursor:not-allowed}
+.cbx[data-disabled="true"] .cbx-in{cursor:not-allowed}
+@media (prefers-reduced-motion:reduce){.cbx .box,.cbx .box svg{transition:none}}
+</style>
+</helmet>
+
+<div class="yy cbx-group" role="group" aria-label="{{ label }}">
+
+<sc-if value="{{ hasLabel }}">
+<div class="cbx-label">{{ label }}</div>
+</sc-if>
+
+<div class="cbx-wrap" style="flex-direction:{{ direction }};gap:{{ gap }}px">
+
+<sc-for list="{{ items }}" as="item">
+<label class="cbx" data-checked="{{ item.checked }}" data-disabled="{{ item.disabledAttr }}">
+<input class="cbx-in" type="checkbox" checked="{{ item.checked }}" disabled="{{ item.isDisabled }}" onChange="{{ item.toggle }}" />
+<span class="box" aria-hidden="true">
+<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 6.5 12 13 4.5"></path></svg>
+</span>
+<span>{{ item.label }}</span>
+</label>
+</sc-for>
+
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"options":{"editor":"text","default":"短信通知\n邮件通知\n站内信\n电话回访","section":"内容"},"label":{"editor":"text","default":"通知方式","section":"内容"},"checked":{"editor":"text","default":"0,1","section":"内容"},"direction":{"editor":"enum","options":["row","column"],"default":"column","section":"样式"},"gap":{"editor":"int","default":12,"min":6,"max":40,"unit":"px","section":"样式"},"disabled":{"editor":"boolean","default":false,"section":"状态"},"$preview":{"width":200,"height":150}}'>
+class Component extends DCLogic {
+  state = {};
+
+  parseChecked() {
+    const raw = this.state.checked !== undefined ? this.state.checked : (this.props.checked ?? '');
+    const s = String(raw)
+      .split(/[\n\r,，、;；\s]+/)
+      .map((x) => parseInt(x, 10))
+      .filter((n) => !isNaN(n));
+    return new Set(s);
+  }
+
+  renderVals() {
+    const truthy = (v) => v === true || v === 'true';
+    const raw = String(this.props.options ?? '')
+      .split(/[\n\r,，、;；]+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const checked = this.parseChecked();
+    const disabled = truthy(this.props.disabled);
+
+    return {
+      label: this.props.label ?? '',
+      hasLabel: (this.props.label ?? '') !== '',
+      direction: this.props.direction === 'row' ? 'row' : 'column',
+      gap: this.props.gap ?? 12,
+      items: raw.map((t, i) => ({
+        label: t,
+        checked: checked.has(i),
+        disabledAttr: disabled ? 'true' : 'false',
+        isDisabled: disabled,
+        toggle: () => {
+          if (disabled) return;
+          const s = this.parseChecked();
+          if (s.has(i)) s.delete(i); else s.add(i);
+          this.setState({ checked: Array.from(s).join(',') });
+        }
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>开关</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.yy{--p:#6366F1;--ph:#4F46E5;--ink:#18181B;--ink2:#27272A;--line2:#D4D4D8;--font:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC',system-ui,sans-serif}
+.tg{display:inline-flex;align-items:center;gap:10px;padding:0;border:0;background:none;font-family:var(--font);cursor:pointer;-webkit-font-smoothing:antialiased;border-radius:999px}
+.tg-track{position:relative;display:block;flex:0 0 auto;border-radius:999px;background:var(--line2);transition:background .16s ease,box-shadow .16s ease}
+.tg[data-size="sm"] .tg-track{width:32px;height:18px}
+.tg[data-size="md"] .tg-track{width:38px;height:22px}
+.tg[data-size="lg"] .tg-track{width:46px;height:26px}
+.tg-knob{position:absolute;left:2px;top:2px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 2px rgba(24,24,27,.22);transition:transform .16s ease,width .16s ease}
+.tg[data-size="sm"] .tg-knob{width:14px;height:14px}
+.tg[data-size="md"] .tg-knob{width:18px;height:18px}
+.tg[data-size="lg"] .tg-knob{width:22px;height:22px}
+.tg[data-on="true"] .tg-track{background:var(--p)}
+.tg[data-on="true"][data-size="sm"] .tg-knob{transform:translateX(14px)}
+.tg[data-on="true"][data-size="md"] .tg-knob{transform:translateX(16px)}
+.tg[data-on="true"][data-size="lg"] .tg-knob{transform:translateX(20px)}
+.tg:hover:not([data-disabled="true"]) .tg-track{box-shadow:0 0 0 3px rgba(99,102,241,.10)}
+.tg:active:not([data-disabled="true"]) .tg-track{filter:brightness(.96)}
+.tg[data-on="true"]:active:not([data-disabled="true"]) .tg-track{background:var(--ph)}
+.tg:focus-visible{outline:2px solid var(--p);outline-offset:2px}
+.tg[data-disabled="true"]{opacity:.45;cursor:not-allowed}
+.tg-label{font-size:13px;line-height:1.5;color:var(--ink2)}
+@media (prefers-reduced-motion:reduce){.tg-track,.tg-knob{transition:none}}
+</style>
+</helmet>
+
+<div class="yy" style="display:inline-flex;align-items:center">
+
+<button class="tg" type="button" role="switch" aria-checked="{{ onAttr }}" aria-label="{{ ariaLabel }}" data-on="{{ onAttr }}" data-size="{{ size }}" data-disabled="{{ disabledAttr }}" disabled="{{ isDisabled }}" onClick="{{ toggle }}">
+
+<span class="tg-track" aria-hidden="true"><span class="tg-knob"></span></span>
+
+<sc-if value="{{ hasLabel }}">
+<span class="tg-label">{{ label }}</span>
+</sc-if>
+
+</button>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"","section":"内容"},"checked":{"editor":"boolean","default":true,"section":"状态"},"size":{"editor":"enum","options":["sm","md","lg"],"default":"md","section":"样式"},"disabled":{"editor":"boolean","default":false,"section":"状态"},"$preview":{"width":120,"height":56}}'>
+class Component extends DCLogic {
+  state = {};
+
+  renderVals() {
+    const truthy = (v) => v === true || v === 'true';
+    const initial = !(this.props.checked === false || this.props.checked === 'false');
+    const on = this.state.on !== undefined ? this.state.on : initial;
+    const disabled = truthy(this.props.disabled);
+    const label = String(this.props.label ?? '');
+    return {
+      onAttr: on ? 'true' : 'false',
+      toggle: () => {
+        if (disabled) return;
+        this.setState({ on: !on });
+      },
+      label,
+      hasLabel: label.length > 0,
+      ariaLabel: label.length > 0 ? label : '开关',
+      size: this.props.size ?? 'md',
+      isDisabled: disabled,
+      disabledAttr: disabled ? 'true' : 'false'
+    };
+  }
+}
+</script>
+</body>
+</html>

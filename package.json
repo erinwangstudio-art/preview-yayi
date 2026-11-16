@@ -1,0 +1,12 @@
+{
+  "name": "yayi-design-preview",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "WORKBUDDY_DEPLOY=1 WORKBUDDY_STABLE_GRANT=yayi-design-preview-2026 node server.mjs . --host 0.0.0.0 --port $PORT"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>灵感广场 · 弹窗陈列</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}*{box-sizing:border-box}button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inherit}
+.w{width:1440px;background:#F4F4F5;color:#18181B;font-family:Inter,-apple-system,'PingFang SC',system-ui,sans-serif;font-size:13px;-webkit-font-smoothing:antialiased;padding:24px;display:flex;flex-direction:column;gap:20px}
+.hd{display:flex;align-items:center;gap:12px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:#18181B;color:#fff;font-size:13px;font-weight:600;height:34px;padding:0 14px;border-radius:9px}
+.hint{font-size:12px;color:#71717A}
+.row{display:flex;gap:16px;align-items:flex-start}
+.slot{display:flex;flex-direction:column;gap:8px;flex:0 0 auto}
+.slot .lb{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#52525B}
+.slot .lb:before{content:"";width:6px;height:6px;border-radius:50%;background:#6366F1}
+.modal{position:static;transform:none;width:540px;max-width:none;background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(24,24,27,.10);border:1px solid #E4E4E7;overflow:hidden}
+.modal.sm{width:460px}
+.mo-h{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid #F4F4F5}
+.mo-h b{font-size:15px;font-weight:600;color:#18181B;flex:1}
+.mo-x{width:28px;height:28px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;color:#71717A;flex:0 0 auto}
+.mo-b{padding:18px 20px;display:flex;flex-direction:column;gap:16px}
+.mo-desc{font-size:12.5px;color:#71717A;line-height:1.6;margin:0}
+.mo-lb{font-size:12px;color:#71717A;margin-bottom:7px;display:block}
+.mo-in{min-height:86px;border:1px solid #E4E4E7;border-radius:8px;background:#FAFAFA;padding:10px 12px;font-size:12.5px;color:#18181B;line-height:1.7;white-space:pre-line;font-variant-numeric:tabular-nums}
+.mo-in.one{min-height:40px;white-space:pre}
+.chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chip{height:28px;padding:0 11px;border-radius:999px;border:1px solid #E4E4E7;background:#fff;color:#52525B;font-size:12.5px;display:inline-flex;align-items:center;gap:5px}
+.chip[data-on="true"]{background:#EEF2FF;border-color:#A5B4FC;color:#4F46E5;font-weight:500}
+.seg{display:inline-flex;align-items:center;gap:3px;background:#F4F4F5;border-radius:9px;padding:3px}
+.seg button{height:28px;padding:0 12px;border-radius:7px;font-size:12.5px;color:#71717A}
+.seg button[data-active="true"]{background:#fff;color:#4F46E5;font-weight:500;box-shadow:0 1px 2px rgba(24,24,27,.08)}
+.mo-f{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px;border-top:1px solid #F4F4F5}
+.btn{height:36px;padding:0 15px;border-radius:8px;font-size:13px;display:inline-flex;align-items:center;gap:7px}
+.b1{background:#6366F1;border:1px solid #6366F1;color:#fff}
+.b2{background:#fff;border:1px solid #E4E4E7;color:#18181B}
+.trow{display:flex;align-items:center;gap:12px}
+.toast{display:inline-flex;align-items:center;gap:9px;background:#18181B;color:#fff;font-size:12.5px;padding:0 16px;height:40px;border-radius:10px;box-shadow:0 10px 30px rgba(24,24,27,.20)}
+.toast svg{flex:0 0 auto;color:#4ADE80}
+</style>
+</helmet>
+
+<div class="w">
+  <div class="hd">
+    <span class="pill"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2.2L2.5 5 8 7.8 13.5 5z"></path><path d="M2.5 8.4L8 11.2l5.5-2.8"></path><path d="M2.5 11.4L8 14.2l5.5-2.8"></path></svg><span>弹窗陈列 · 评审视图</span></span>
+    <span class="hint">灵感广场全部弹窗与 Toast 平铺陈列 · 静态示意，交互演示见「灵感广场」画板（页头「弹窗」开关独占编辑）</span>
+  </div>
+
+  <div class="row">
+    <div class="slot">
+      <span class="lb">弹窗 1 · 批量采集（触发：页头「批量采集」）</span>
+      <div class="modal" role="dialog" aria-label="批量采集弹窗">
+        <div class="mo-h"><b>新建批量采集任务</b><button class="mo-x" aria-label="关闭"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"></path></svg></button></div>
+        <div class="mo-b">
+          <p class="mo-desc">从 Temu / Shein 抓取图案素材，任务完成后自动去重入库，可在「生成记录」查看进度。</p>
+          <div><span class="mo-lb">采集方式</span><span class="chips"><button class="chip" data-on="true">关键词</button><button class="chip">店铺链接</button><button class="chip">商品链接</button></span></div>
+          <div><span class="mo-lb">关键词 / 链接（每行一个，最多 200 条）</span><div class="mo-in">floral print dress
+kawaii corgi tee
+https://www.temu.com/goods-123.html</div></div>
+        </div>
+        <div class="mo-f"><button class="btn b2">取消</button><button class="btn b1">创建任务</button></div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <span class="lb">弹窗 2 · 设置 logo 标签（触发：工具条「设置 logo 标签」）</span>
+      <div class="modal sm" role="dialog" aria-label="设置 logo 标签弹窗">
+        <div class="mo-h"><b>设置 logo 标签</b><button class="mo-x" aria-label="关闭"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"></path></svg></button></div>
+        <div class="mo-b">
+          <p class="mo-desc">为选中的图案批量设置 logo 标签，标记将写入图案元数据，并同步更新筛选口径中的「logo 标签」维度。</p>
+          <div><span class="mo-lb">新增标签（回车确认，每个图案最多 5 个）</span><div class="mo-in one">无 logo</div></div>
+          <div><span class="mo-lb">常用标签</span><span class="chips"><button class="chip" data-on="true">无 logo</button><button class="chip" data-on="true">有 logo</button><button class="chip">待确认</button><button class="chip">自有 IP</button><button class="chip">授权中</button></span></div>
+        </div>
+        <div class="mo-f"><button class="btn b2">取消</button><button class="btn b1">保存标签</button></div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <span class="lb">弹窗 3 · 导出选中（触发：页头「导出选中」）</span>
+      <div class="modal sm" role="dialog" aria-label="导出选中弹窗">
+        <div class="mo-h"><b>导出选中图案</b><button class="mo-x" aria-label="关闭"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"></path></svg></button></div>
+        <div class="mo-b">
+          <p class="mo-desc">将导出当前选中的图案，打包为 ZIP 下载。导出内容可选：原图与元数据、仅原图、仅元数据表格（CSV）。</p>
+          <div><span class="mo-lb">导出内容</span><span class="seg"><button data-active="true">原图 + 元数据</button><button>仅原图</button><button>元数据表格 (CSV)</button></span></div>
+        </div>
+        <div class="mo-f"><button class="btn b2">取消</button><button class="btn b1">确认导出</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trow">
+    <span class="lb" style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#52525B"><span style="width:6px;height:6px;border-radius:50%;background:#6366F1;display:inline-block"></span>Toast · 操作成功反馈（顶部居中浮现 3 秒自动消失，点按可关闭）</span>
+    <span class="toast"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M5.4 8.2l1.8 1.8 3.4-3.6"></path></svg><span>采集任务已创建，正在后台运行，完成后将通知你</span></span>
+    <span class="toast"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M5.4 8.2l1.8 1.8 3.4-3.6"></path></svg><span>logo 标签已更新</span></span>
+    <span class="toast"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M5.4 8.2l1.8 1.8 3.4-3.6"></path></svg><span>已开始导出，完成后可在下载中心查看</span></span>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

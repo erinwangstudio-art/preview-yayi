@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>标签页</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.yy{--p:#6366F1;--ph:#4F46E5;--ink:#18181B;--muted:#71717A;--line:#E4E4E7;--bg2:#F4F4F5;--font:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC',system-ui,sans-serif}
+.tabs{display:flex;align-items:flex-end;width:100%;box-sizing:border-box;font-family:var(--font);-webkit-font-smoothing:antialiased}
+.tb-list{display:flex;align-items:center;width:100%;box-sizing:border-box}
+.tb-list[data-variant="line"]{gap:var(--gap);border-bottom:1px solid var(--line)}
+.tb-list[data-variant="pill"]{gap:4px;background:var(--bg2);border-radius:9px;padding:3px}
+.tb{font-family:inherit;background:none;border:0;padding:0;cursor:pointer;color:var(--muted);transition:color .14s ease,background .14s ease,border-color .14s ease;white-space:nowrap}
+.tb[data-variant="line"]{border-bottom:2px solid transparent;margin-bottom:-1px;padding:0 0 10px;line-height:1.4}
+.tb[data-variant="line"]:hover{color:var(--ink)}
+.tb[data-variant="line"][data-active="true"]{color:var(--ink);font-weight:600;border-bottom-color:var(--p)}
+.tb[data-variant="pill"]{display:inline-flex;align-items:center;justify-content:center;height:28px;padding:0 14px;border-radius:8px;font-size:13px;line-height:1}
+.tb[data-variant="pill"]:hover{color:var(--ink);background:rgba(255,255,255,.7)}
+.tb[data-variant="pill"][data-active="true"]{color:#FFFFFF;background:var(--p);font-weight:500;box-shadow:0 1px 2px rgba(24,24,27,.10)}
+.tb[data-variant="pill"][data-active="true"]:hover{background:var(--ph)}
+.tb:focus-visible{outline:2px solid var(--p);outline-offset:2px;border-radius:6px}
+.tb[data-variant="line"]:focus-visible{border-radius:4px 4px 0 0}
+@media (prefers-reduced-motion:reduce){.tb{transition:none}}
+</style>
+</helmet>
+
+<div class="yy" style="display:flex;align-items:flex-end;width:100%">
+
+<div class="tb-list" role="tablist" aria-label="{{ groupLabel }}" data-variant="{{ variant }}" style="--gap:{{ gap }}px">
+
+<sc-for list="{{ list }}" as="item" hint-placeholder-count="4">
+<button class="tb" type="button" role="tab" aria-selected="{{ item.active }}" tabindex="{{ item.tab }}" data-variant="{{ variant }}" data-active="{{ item.active }}" onClick="{{ item.pick }}" onKeyDown="{{ item.key }}" style="font-size:{{ fs }}px">{{ item.label }}</button>
+</sc-for>
+
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"items":{"editor":"text","default":"全部\n待付款\n待发货\n已发货\n已完成\n售后","section":"内容"},"activeIndex":{"editor":"int","default":0,"min":0,"max":20,"section":"内容"},"gap":{"editor":"int","default":24,"min":8,"max":64,"unit":"px","section":"样式"},"size":{"editor":"enum","options":["sm","md","lg"],"default":"md","section":"样式"},"variant":{"editor":"enum","options":["line","pill"],"default":"line","section":"样式"},"groupLabel":{"editor":"text","default":"订单状态","section":"无障碍"},"$preview":{"width":343,"height":48}}'>
+class Component extends DCLogic {
+  state = {};
+
+  move(e, next, total) {
+    const idx = Math.max(0, Math.min(total - 1, next));
+    const list = e.currentTarget.closest('[role="tablist"]');
+    const tabs = list ? list.querySelectorAll('[role="tab"]') : [];
+    if (tabs[idx]) tabs[idx].focus();
+    this.setState({ idx });
+  }
+
+  renderVals() {
+    const raw = String(this.props.items ?? '')
+      .split(/[\n\r,，、;；]+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const idx = this.state.idx !== undefined ? this.state.idx : Number(this.props.activeIndex ?? 0);
+    const size = this.props.size ?? 'md';
+    const total = raw.length;
+
+    return {
+      list: raw.map((label, i) => ({
+        label,
+        active: i === idx,
+        tab: i === idx ? '0' : '-1',
+        pick: () => {
+          this.setState({ idx: i });
+          if (typeof this.props.onChange === 'function') this.props.onChange(i, label);
+        },
+        key: (e) => {
+          const k = e.key;
+          if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); this.move(e, i + 1, total); }
+          else if (k === 'ArrowLeft' || k === 'ArrowUp') { e.preventDefault(); this.move(e, i - 1, total); }
+          else if (k === 'Home') { e.preventDefault(); this.move(e, 0, total); }
+          else if (k === 'End') { e.preventDefault(); this.move(e, total - 1, total); }
+        }
+      })),
+      gap: this.props.gap ?? 24,
+      variant: this.props.variant === 'pill' ? 'pill' : 'line',
+      groupLabel: this.props.groupLabel ?? '标签页',
+      fs: { sm: 12.5, md: 13, lg: 14 }[size] ?? 13
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>灵感广场</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}*{box-sizing:border-box}a{text-decoration:none;color:inherit}button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inherit}
+.w{display:flex;min-height:1290px;background:#F4F4F5;color:#18181B;font-family:Inter,-apple-system,'PingFang SC',system-ui,sans-serif;font-size:13px;-webkit-font-smoothing:antialiased;width:1440px}
+/* 侧栏 */
+.sb{width:240px;flex:0 0 240px;background:#F7F7F8;border-right:1px solid #E4E4E7;display:flex;flex-direction:column}
+.sb-h{height:64px;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E9E9EB}
+.logo{width:30px;height:30px;border-radius:9px;background:#6366F1;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px}
+.sb-t{flex:1;font-size:15px;font-weight:500;color:#18181B}
+.grp{font-size:11px;color:#A1A1AA;padding:7px 20px 3px}
+.nav{display:flex;align-items:center;gap:8px;height:32px;margin:1px 10px;padding:0 10px;border-radius:8px;font-size:13px;color:#71717A;border:1px solid transparent;transition:background .14s ease,color .14s ease}
+.nav .ic{flex:0 0 auto;color:#A1A1AA;display:flex}
+.nav:hover{background:#EDEDEF;color:#18181B}
+.nav.on{background:#4F46E5;border-color:#4F46E5;color:#fff;font-weight:500}
+.nav.on .ic{color:#fff}
+.sep{height:1px;background:#E9E9EB;margin:6px 16px}
+.sb-b{margin-top:auto;padding:0 12px 14px}
+/* 主区 */
+.mn{flex:1;min-width:0;display:flex;flex-direction:column}
+.tp{height:64px;background:#fff;border-bottom:1px solid #E4E4E7;display:flex;align-items:center;gap:14px;padding:0 24px;flex:0 0 auto}
+.q{width:280px;height:36px;background:#FAFAFA;border:1px solid #E4E4E7;border-radius:8px;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13px;color:#A1A1AA}
+.ib{position:relative;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#52525B;cursor:pointer}
+.ib:hover{background:#F4F4F5}
+.dot{position:absolute;top:8px;right:8px;width:6px;height:6px;border-radius:50%;background:#F43F5E;border:1.5px solid #fff}
+.vd{width:1px;height:20px;background:#E4E4E7}
+.usr{display:flex;align-items:center;gap:9px;font-size:13px;color:#27272A;cursor:pointer}
+.av{width:32px;height:32px;border-radius:50%;background:#6366F1;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500}
+.bd{flex:1;padding:24px}
+/* 页头 */
+.hd{display:flex;align-items:flex-end;gap:12px}
+.h1{font-size:20px;font-weight:600;letter-spacing:-.2px;margin:0;color:#18181B}
+.sub{font-size:12px;color:#71717A;margin-top:5px}
+.btn{height:36px;padding:0 15px;border-radius:8px;font-size:13px;display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;transition:background .14s ease,border-color .14s ease}
+.btn.sm{height:32px;padding:0 12px;font-size:12.5px}
+.b1{background:#6366F1;border:1px solid #6366F1;color:#fff}
+.b1:hover{background:#4F46E5;border-color:#4F46E5}
+.b2{background:#fff;border:1px solid #E4E4E7;color:#18181B}
+.b2:hover{background:#FAFAFA;border-color:#D4D4D8}
+/* 平台切换 */
+.plat{margin-top:16px;background:#fff;border:1px solid #E4E4E7;border-radius:12px;padding:0 18px;height:52px;display:flex;align-items:center;gap:22px}
+.ptab{height:52px;display:inline-flex;align-items:center;font-size:13.5px;color:#71717A;border-bottom:2px solid transparent;margin-bottom:-1px;padding:0 2px;transition:color .14s ease}
+.ptab:hover{color:#18181B}
+.ptab[data-active="true"]{color:#4F46E5;font-weight:600;border-bottom-color:#6366F1}
+.src{margin-left:auto;font-size:12px;color:#A1A1AA}
+/* 筛选卡 */
+.flt{margin-top:14px;background:#fff;border:1px solid #E4E4E7;border-radius:12px;padding:16px 18px 14px}
+.frow{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.frow+.frow{margin-top:12px;padding-top:12px;border-top:1px solid #F4F4F5}
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+.lb{font-size:12px;color:#71717A;line-height:1.2}
+.sel{appearance:none;-webkit-appearance:none;height:34px;min-width:132px;padding:0 30px 0 10px;border:1px solid #E4E4E7;border-radius:8px;background:#fff;font-family:inherit;font-size:13px;color:#18181B;cursor:pointer;outline:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16' fill='none' stroke='%23A1A1AA' stroke-width='1.6' stroke-linecap='round'><path d='M4.5 6.4L8 9.9l3.5-3.5'/></svg>");background-repeat:no-repeat;background-position:right 10px center}
+.sel:hover{border-color:#D4D4D8}
+.sel:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,.14)}
+.seg{display:inline-flex;align-items:center;gap:3px;background:#F4F4F5;border-radius:9px;padding:3px}
+.seg button{height:28px;padding:0 12px;border-radius:7px;font-size:12.5px;color:#71717A;transition:background .14s ease,color .14s ease}
+.seg button:hover{color:#18181B}
+.seg button[data-active="true"]{background:#fff;color:#4F46E5;font-weight:500;box-shadow:0 1px 2px rgba(24,24,27,.08)}
+.chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chip{height:28px;padding:0 11px;border-radius:999px;border:1px solid #E4E4E7;background:#fff;color:#52525B;font-size:12.5px;display:inline-flex;align-items:center;gap:5px;transition:background .14s ease,border-color .14s ease,color .14s ease}
+.chip:hover{border-color:#A5B4FC;color:#4F46E5}
+.chip[data-on="true"]{background:#EEF2FF;border-color:#A5B4FC;color:#4F46E5;font-weight:500}
+.chip[data-on="true"]:after{content:"";width:5px;height:5px;border-radius:50%;background:#6366F1}
+.fld-lb{font-size:12px;color:#71717A;margin-right:2px}
+.frow .grow{flex:1}
+/* 工具条 */
+.tbar{margin-top:14px;background:#fff;border:1px solid #E4E4E7;border-radius:12px;height:52px;display:flex;align-items:center;gap:14px;padding:0 16px}
+.stab{height:52px;display:inline-flex;align-items:center;font-size:13px;color:#71717A;border-bottom:2px solid transparent;margin-bottom:-1px;padding:0 2px;transition:color .14s ease}
+.stab:hover{color:#18181B}
+.stab[data-active="true"]{color:#18181B;font-weight:600;border-bottom-color:#6366F1}
+.vd2{width:1px;height:18px;background:#E4E4E7}
+.selall{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#27272A}
+.ck{width:16px;height:16px;box-sizing:border-box;border-radius:4px;border:1.5px solid #D4D4D8;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;transition:background .12s ease,border-color .12s ease}
+.ck[data-sel="true"]{background:#6366F1;border-color:#6366F1}
+.ck[data-sel="true"]:after{content:"";width:8px;height:4.5px;border-left:1.6px solid #fff;border-bottom:1.6px solid #fff;transform:rotate(-45deg) translate(0.5px,-1px)}
+.selcnt{font-size:12.5px;color:#71717A}
+.selcnt b{color:#4F46E5;font-weight:600;font-variant-numeric:tabular-nums}
+/* 卡片网格 6 列 */
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:14px}
+.card{background:#fff;border:1px solid #E4E4E7;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .16s ease,border-color .16s ease,transform .16s ease}
+.card:hover{box-shadow:0 6px 18px rgba(24,24,27,.08);border-color:#D4D4D8;transform:translateY(-1px)}
+.card[data-sel="true"]{border-color:#6366F1;box-shadow:0 0 0 2px rgba(99,102,241,.16)}
+.thumb{position:relative;aspect-ratio:1/1;background:#F4F4F5;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.card:hover .thumb img{transform:scale(1.035)}
+.pick{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(24,24,27,.16)}
+.pick .ck{width:14px;height:14px;border-radius:3.5px}
+.cat{position:absolute;left:8px;bottom:8px;height:20px;padding:0 7px;border-radius:5px;background:rgba(24,24,27,.62);color:#fff;font-size:11px;display:inline-flex;align-items:center;backdrop-filter:blur(2px)}
+.meta{padding:9px 10px 10px;display:flex;flex-direction:column;gap:5px}
+.r2{display:flex;align-items:flex-end;gap:10px}
+.r2>div{display:flex;flex-direction:column;gap:1px;min-width:0}
+.k{font-size:11px;color:#A1A1AA;line-height:1.3;white-space:nowrap}
+.v{font-size:13.5px;color:#18181B;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.2}
+.trow{display:flex;gap:4px;flex-wrap:wrap;margin-top:1px}
+.tag{height:19px;padding:0 6px;border-radius:5px;background:#F4F4F5;color:#52525B;font-size:11px;display:inline-flex;align-items:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kv{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11.5px}
+.kv .v2{color:#27272A;font-variant-numeric:tabular-nums}
+.risk{display:inline-flex;align-items:center;gap:4px;font-size:11.5px}
+.risk:before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+.risk[data-risk="safe"]{color:#16A34A}
+.risk[data-risk="none"]{color:#A1A1AA}
+.risk[data-risk="warn"]{color:#B45309}
+.catbar{margin-top:auto;padding:0 10px 10px}
+.catbar span{display:block;height:24px;border-radius:6px;background:#FAFAFA;border:1px solid #F0F0F1;color:#71717A;font-size:11.5px;display:flex;align-items:center;justify-content:center;gap:4px}
+/* 分页 */
+.pager{margin-top:16px;display:flex;align-items:center;gap:8px;font-size:12.5px;color:#71717A}
+.pager .tot{margin-right:6px}
+.pbtn{min-width:30px;height:30px;padding:0 8px;border:1px solid #E4E4E7;border-radius:7px;background:#fff;color:#52525B;font-size:12.5px;display:inline-flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+.pbtn:hover{border-color:#A5B4FC;color:#4F46E5}
+.pbtn[data-active="true"]{background:#6366F1;border-color:#6366F1;color:#fff;font-weight:500}
+.pbtn[data-gap="true"]{border-color:transparent;background:none;cursor:default;color:#A1A1AA}
+.pbtn[data-gap="true"]:hover{border-color:transparent;color:#A1A1AA}
+.pgoto{margin-left:auto;display:flex;align-items:center;gap:6px}
+.pgoto input{width:46px;height:30px;border:1px solid #E4E4E7;border-radius:7px;text-align:center;font-family:inherit;font-size:12.5px;color:#18181B;outline:none}
+.pgoto input:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,.14)}
+.psize{height:30px;border:1px solid #E4E4E7;border-radius:7px;background:#fff;padding:0 8px;font-size:12.5px;color:#52525B}
+/* ===== 开发说明层 ===== */
+.w{position:relative}
+.plat,.flt,.tbar,.grid,.pager{position:relative}
+.pin{position:absolute;top:-11px;left:-11px;width:24px;height:24px;border-radius:50%;background:#18181B;color:#fff;font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(24,24,27,.28);border:2px solid #fff;z-index:30}
+.btn[data-docs-on="true"]{background:#18181B;border-color:#18181B;color:#fff}
+.rail{position:absolute;top:76px;right:0;bottom:0;width:404px;padding:0 24px 24px 0;display:flex;flex-direction:column;gap:12px;z-index:40;pointer-events:none}
+.note{pointer-events:auto;background:#fff;border:1px solid #E4E4E7;border-radius:10px;padding:11px 12px;display:flex;gap:10px;box-shadow:0 6px 18px rgba(24,24,27,.10);transition:border-color .14s ease,box-shadow .14s ease}
+.note[data-hl="true"]{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,.14),0 6px 18px rgba(24,24,27,.10)}
+.note.head{background:#18181B;border-color:#18181B;color:#fff}
+.note.head b{font-size:13px;display:block}
+.note.head .s{display:block;font-size:11px;color:#A1A1AA;margin-top:3px;line-height:1.5}
+.dno{width:22px;height:22px;border-radius:50%;background:#18181B;color:#fff;font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.note[data-hl="true"] .dno{background:#6366F1}
+.note .tx b{display:block;font-size:12.5px;font-weight:600;color:#18181B;margin-bottom:3px}
+.note .tx p.pl{margin:0;font-size:11.5px;color:#52525B;line-height:1.6;white-space:pre-line}
+.docs-x{margin-left:auto;width:26px;height:26px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;color:#A1A1AA;flex:0 0 auto}
+.docs-x:hover{background:rgba(255,255,255,.14);color:#fff}
+/* ===== 弹窗与 Toast ===== */
+.mask{position:absolute;inset:0;background:rgba(24,24,27,.45);z-index:50}
+.modal{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:540px;max-width:calc(100% - 48px);background:#fff;border-radius:14px;box-shadow:0 24px 64px rgba(24,24,27,.26);z-index:51;overflow:hidden}
+.mo-h{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid #F4F4F5}
+.mo-h b{font-size:15px;font-weight:600;color:#18181B;flex:1}
+.mo-x{width:28px;height:28px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;color:#71717A;flex:0 0 auto}
+.mo-x:hover{background:#F4F4F5;color:#18181B}
+.mo-b{padding:18px 20px;display:flex;flex-direction:column;gap:16px}
+.mo-desc{font-size:12.5px;color:#71717A;line-height:1.6;margin:0}
+.mo-lb{font-size:12px;color:#71717A;margin-bottom:7px;display:block}
+.mo-in{min-height:86px;border:1px solid #E4E4E7;border-radius:8px;background:#FAFAFA;padding:10px 12px;font-size:12.5px;color:#18181B;line-height:1.7;white-space:pre-line;font-variant-numeric:tabular-nums}
+.mo-f{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px;border-top:1px solid #F4F4F5}
+.toast{position:absolute;top:82px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:9px;background:#18181B;color:#fff;font-size:12.5px;padding:0 16px;height:40px;border-radius:10px;box-shadow:0 10px 30px rgba(24,24,27,.30);z-index:60;max-width:calc(100% - 48px)}
+.toast svg{flex:0 0 auto;color:#4ADE80}
+.modal.sm{width:460px}
+.mo-in.one{min-height:40px;white-space:pre;overflow:hidden}
+/* ===== 弹窗清单（独占编辑模式） ===== */
+.btn[data-mods-on="true"]{background:#18181B;border-color:#18181B;color:#fff}
+.mlist{position:absolute;top:78px;left:24px;z-index:55;display:flex;align-items:center;gap:6px;background:#18181B;border-radius:10px;padding:8px 10px;box-shadow:0 10px 30px rgba(24,24,27,.24)}
+.mlist .mt{font-size:11.5px;color:#A1A1AA;padding:0 4px 0 6px;flex:0 0 auto}
+.mch{height:28px;padding:0 12px;border-radius:7px;font-size:12.5px;color:#D4D4D8;display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;transition:background .14s ease,color .14s ease}
+.mch:hover{background:rgba(255,255,255,.14);color:#fff}
+.mch[data-on="true"]{background:#6366F1;color:#fff;font-weight:500}
+.mch .mx{width:14px;height:14px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;color:inherit}
+.mch .mx:hover{background:rgba(0,0,0,.22);color:#fff}
+.mhint{font-size:11px;color:#71717A;padding:2px 6px 0 4px;flex:0 0 auto}
+
+</style>
+</helmet>
+
+<div class="w">
+  <aside class="sb">
+    <div class="sb-h"><div class="logo">Y</div><div class="sb-t">Yayi Design</div><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M9.6 3.4L5.8 8l3.8 4.6"></path><path d="M3.2 2.6v10.8"></path></svg></div>
+    <div class="grp">工作区</div>
+    <a class="nav" href="YayiHome.dc.html"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="4.8" height="4.8" rx="1.1"></rect><rect x="8.7" y="2.5" width="4.8" height="4.8" rx="1.1"></rect><rect x="2.5" y="8.7" width="4.8" height="4.8" rx="1.1"></rect><rect x="8.7" y="8.7" width="4.8" height="4.8" rx="1.1"></rect></svg></span><span>工作台</span></a>
+    <div class="nav on"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2a4 4 0 00-2.2 7.3V11h4.4V9.3A4 4 0 008 2z"></path><path d="M6.3 13.2h3.4"></path></svg></span><span>灵感广场</span></div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2c2.2 1.6 3.2 3.8 3.2 6.4L9.6 11H6.4L4.8 8.4C4.8 5.8 5.8 3.6 8 2z"></path><circle cx="8" cy="6.3" r="1.1"></circle><path d="M6.4 11L5 13.8M9.6 11l1.4 2.8"></path></svg></span>智能开款</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><rect x="2" y="3.5" width="8.5" height="7" rx="0.8"></rect><path d="M10.5 6.5h2.6L14.8 8.6v1.9h-4.3"></path><circle cx="4.8" cy="12" r="1.2"></circle><circle cx="11.8" cy="12" r="1.2"></circle></svg></span>智能履约</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.8"></circle><path d="M8 4.9V8l2.1 1.6"></path></svg></span>生成记录</div>
+    <div class="sep"></div>
+    <div class="grp">资产</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="5.3" cy="5.3" r="2.1"></circle><circle cx="10.7" cy="5.3" r="2.1"></circle><circle cx="5.3" cy="10.7" r="2.1"></circle><rect x="8.8" y="8.8" width="3.8" height="3.8" rx="0.8"></rect></svg></span>图案库</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><rect x="2" y="2.5" width="12" height="11" rx="1.6"></rect><path d="M2 6.2h12M6.3 6.2v7.3"></path></svg></span>版型库</div>
+    <div class="sep"></div>
+    <div class="grp">运营</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8.8 2.2H13a1 1 0 011 1v4.2a1 1 0 01-.3.7l-5.9 5.9a1 1 0 01-1.4 0L2.9 9.5a1 1 0 010-1.4l5.6-5.6a1 1 0 01.3-.3z"></path><circle cx="10.8" cy="5.2" r="1.1"></circle></svg></span>智能核价</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M3 6.3v3.4h1.8L11 13V3L4.8 6.3z"></path><path d="M12.6 6.2a2.7 2.7 0 010 3.6"></path></svg></span>活动申报</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><rect x="2" y="7" width="5.2" height="7" rx="1"></rect><rect x="8.8" y="7" width="5.2" height="7" rx="1"></rect><path d="M3.6 7V4.2A1.2 1.2 0 014.8 3h6.4a1.2 1.2 0 011.2 1.2V7"></path></svg></span>库存同步</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2.5v7M5.2 6.7L8 9.5l2.8-2.8"></path><path d="M2.5 12v1a1 1 0 001 1h9a1 1 0 001-1v-1"></path></svg></span>商品下架</div>
+    <div class="sep"></div>
+    <div class="grp">经营</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2.6V8h5.4A5.4 5.4 0 118 2.6z"></path></svg></span>货盘中心</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><rect x="2" y="3" width="2.2" height="2.2" rx="0.5"></rect><rect x="2" y="6.9" width="2.2" height="2.2" rx="0.5"></rect><rect x="2" y="10.8" width="2.2" height="2.2" rx="0.5"></rect><path d="M6.5 4.1h7.3M6.5 8h7.3M6.5 11.9h7.3"></path></svg></span>商品列表</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="5.4" cy="12.6" r="1.1"></circle><circle cx="10.9" cy="12.6" r="1.1"></circle><path d="M2.4 2.8h1.9l2 8h6.1l1.7-6.3H5.2"></path></svg></span>订单列表</div>
+    <div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M2.5 13.5V6.8L3.8 2.5h8.4l1.3 4.3v6.7z"></path><path d="M2.5 7.2c0 1.2 1 2 2.2 2s2.2-.8 2.2-2c0 1.2 1 2 2.2 2s2.2-.8 2.2-2c0 1.2 1 2 2.1 2"></path><path d="M6 13.5v-3h4v3"></path></svg></span>店铺管理</div>
+    <div class="sb-b"><div class="nav"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.2"></circle><path d="M8 2.2v1.5M8 12.3v1.5M2.2 8h1.5M12.3 8h1.5M3.9 3.9l1 1M11.1 11.1l1 1M12.1 3.9l-1 1M4.9 11.1l-1 1"></path></svg></span>设置</div></div>
+  </aside>
+
+  <div class="mn">
+    <header class="tp">
+      <div class="q"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.2"></circle><path d="M10.2 10.2l3.3 3.3"></path></svg><span>搜索图案、元素、店铺</span></div>
+      <div style="flex:1"></div>
+      <button class="btn b2" data-mods-on="{{ modsOnAttr }}" onClick="{{ toggleMods }}" title="弹窗清单：点哪个只显示哪个，独占编辑不互相遮挡"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2.2L2.5 5 8 7.8 13.5 5z"></path><path d="M2.5 8.4L8 11.2l5.5-2.8"></path><path d="M2.5 11.4L8 14.2l5.5-2.8"></path></svg><span>弹窗</span></button>
+      <button class="btn b2" data-docs-on="false" onClick="{{ toggleDocs }}" title="一键显示/隐藏开发编号说明"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M5.5 4.5L2 8l3.5 3.5"></path><path d="M10.5 4.5L14 8l-3.5 3.5"></path></svg><span>开发说明</span></button><div class="ib"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.8"></circle><path d="M6.4 6.2a1.7 1.7 0 013.2.9c0 1.2-1.6 1.5-1.6 2.4"></path><path d="M8 11.6h.01"></path></svg></div>
+      <div class="ib"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M3 12.6v-.8a2.6 2.6 0 011.6-2.4 7.8 7.8 0 016.8 0A2.6 2.6 0 0113 11.8v.8"></path><circle cx="8" cy="5" r="2.4"></circle><path d="M3 12.6h10"></path></svg><span class="dot"></span></div>
+      <div class="vd"></div>
+      <div class="usr"><div class="av">王</div><div>用户5628</div><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M4.5 6.4L8 9.9l3.5-3.5"></path></svg></div>
+    </header>
+
+    <div class="bd">
+      <div class="hd">
+        <div>
+          <h1 class="h1">灵感广场</h1>
+          <div class="sub">跨境图案素材库 · 共 10,000 条 · 支持批量采集与 AI 生图</div>
+        </div>
+        <div style="flex:1"></div>
+        
+        <button class="btn b2" onClick="{{ openExport }}"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2.5v7.2M5.2 6.9L8 9.7l2.8-2.8"></path><path d="M2.5 11.5v1.5a1 1 0 001 1h9a1 1 0 001-1v-1.5"></path></svg>导出选中</button>
+        <button class="btn b1" onClick="{{ openCollect }}"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 3.2v9.6M3.2 8h9.6"></path></svg>批量采集</button>
+      </div>
+
+      <div class="plat">
+        <sc-if value="{{ docsOn }}"><span class="pin" title="数据来源与获取" onClick="{{ pin1 }}">1</span></sc-if>
+        <sc-for list="{{ plats }}" as="p">
+          <button class="ptab" type="button" data-active="{{ p.active }}" onClick="{{ p.pick }}">{{ p.label }}</button>
+        </sc-for>
+        <div class="src">{{ sourceText }}</div>
+      </div>
+
+      <div class="flt">
+        <sc-if value="{{ docsOn }}"><span class="pin" title="筛选维度与字段口径" onClick="{{ pin2 }}">2</span></sc-if>
+        <div class="frow">
+          <div class="fld"><span class="lb">来源</span><select class="sel"><option>全部来源</option><option>官方店铺</option><option>第三方采集</option><option>人工上传</option></select></div>
+          <div class="fld"><span class="lb">店铺类型</span><select class="sel"><option>全部类型</option><option>POP 店</option><option>全托管</option><option>半托管</option></select></div>
+          <div class="fld"><span class="lb">品类（一级）</span><select class="sel"><option>女装</option><option>男装</option><option>童装</option><option>家居</option><option>配饰</option></select></div>
+          <div class="fld"><span class="lb">品类（末级）</span><select class="sel"><option>连衣裙</option><option>T 恤</option><option>卫衣</option><option>半身裙</option><option>外套</option></select></div>
+          <div class="fld"><span class="lb">图案款次</span><select class="sel"><option>不限</option><option>1–10 款</option><option>11–50 款</option><option>50 款以上</option></select></div>
+          <div class="grow"></div>
+          <div class="fld"><span class="lb">是否使用</span><span class="seg"><sc-for list="{{ uses }}" as="u"><button type="button" data-active="{{ u.active }}" onClick="{{ u.pick }}">{{ u.label }}</button></sc-for></span></div>
+        </div>
+        <div class="frow">
+          <div class="fld"><span class="lb">总销量</span><select class="sel"><option>不限</option><option>1,000+</option><option>1 万+</option><option>10 万+</option></select></div>
+          <div class="fld"><span class="lb">首次上架时间</span><select class="sel"><option>近 30 天</option><option>近 90 天</option><option>近半年</option><option>近一年</option></select></div>
+          <div class="fld"><span class="lb">logo 标签</span><select class="sel"><option>不限</option><option>有 logo</option><option>无 logo</option><option>待确认</option></select></div>
+          <div class="fld"><span class="lb">生图记录</span><select class="sel"><option>不限</option><option>已生图</option><option>未生图</option></select></div>
+          <div class="grow"></div>
+        </div>
+        <div class="frow">
+          <span class="fld-lb">图案元素</span>
+          <div class="chips">
+            <sc-for list="{{ elems }}" as="e"><button class="chip" type="button" data-on="{{ e.on }}" onClick="{{ e.pick }}">{{ e.label }}</button></sc-for>
+          </div>
+        </div>
+        <div class="frow">
+          <span class="fld-lb">侵权结果</span>
+          <div class="chips">
+            <sc-for list="{{ risks }}" as="r"><button class="chip" type="button" data-on="{{ r.on }}" onClick="{{ r.pick }}">{{ r.label }}</button></sc-for>
+          </div>
+          <div class="grow"></div>
+          <button class="btn b2">重置筛选</button>
+          <button class="btn b1">查询</button>
+        </div>
+      </div>
+
+      <div class="tbar">
+        <sc-if value="{{ docsOn }}"><span class="pin" title="排序 · 批量选择 · 操作出口" onClick="{{ pin3 }}">3</span></sc-if>
+        <sc-for list="{{ sorts }}" as="s"><button class="stab" type="button" data-active="{{ s.active }}" onClick="{{ s.pick }}">{{ s.label }}</button></sc-for>
+        <div class="vd2"></div>
+        <button class="selall" type="button" onClick="{{ toggleAll }}"><span class="ck" data-sel="{{ allSel }}"></span>全选</button>
+        <div class="selcnt">已选中 <b>{{ selCount }}</b> 项</div>
+        <div style="flex:1"></div>
+        <button class="btn b2 sm" onClick="{{ openTag }}">设置 logo 标签</button>
+        <button class="btn b1 sm"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M6.4 1.8l1.1 2.7 2.7 1.1-2.7 1.1-1.1 2.7-1.1-2.7-2.7-1.1 2.7-1.1z"></path><path d="M12.3 9.3l.7 1.7 1.7.7-1.7.7-.7 1.7-.7-1.7-1.7-.7 1.7-.7z"></path></svg>AI 生图</button>
+        <button class="btn b2 sm">加入工作流</button>
+      </div>
+
+      <div class="grid">
+        <sc-if value="{{ docsOn }}"><span class="pin" title="图案卡 · 同款聚合口径" onClick="{{ pin4 }}">4</span></sc-if>
+        <sc-for list="{{ cards }}" as="c">
+          <div class="card" data-sel="{{ c.sel }}">
+            <div class="thumb">
+              <img src="{{ c.img }}" alt="{{ c.title }}" loading="lazy">
+              <button class="pick" type="button" onClick="{{ c.toggle }}" aria-label="选择该图案"><span class="ck" data-sel="{{ c.sel }}"></span></button>
+              <span class="cat">{{ c.badge }}</span>
+            </div>
+            <div class="meta">
+              <div class="r2">
+                <div><span class="k">总销量</span><span class="v">{{ c.sales }}</span></div>
+                <div><span class="k">图案款次</span><span class="v">{{ c.uses }}</span></div>
+              </div>
+              <div class="trow"><span class="tag">{{ c.tag1 }}</span><span class="tag">{{ c.tag2 }}</span></div>
+              <div class="kv"><span class="k">侵权类型</span><span class="risk" data-risk="{{ c.riskKey }}">{{ c.risk }}</span></div>
+              <div class="kv"><span class="k">生图记录</span><span class="v2">{{ c.gen }}</span></div>
+              <div class="kv"><span class="k">首次上架</span><span class="v2">{{ c.date }}</span></div>
+            </div>
+            <div class="catbar"><span>{{ c.catLine }}</span></div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div class="pager">
+        <sc-if value="{{ docsOn }}"><span class="pin" title="分页与勾选保留" onClick="{{ pin5 }}">5</span></sc-if>
+        <span class="tot">共 10,000 条</span>
+        <select class="psize"><option>120 条/页</option><option>60 条/页</option><option>240 条/页</option></select>
+        <button class="pbtn" type="button" onClick="{{ prevPage }}" aria-label="上一页"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M9.6 3.4L5.8 8l3.8 4.6"></path></svg></button>
+        <sc-for list="{{ pages }}" as="pg"><button class="pbtn" type="button" data-active="{{ pg.active }}" data-gap="{{ pg.gap }}" onClick="{{ pg.pick }}">{{ pg.label }}</button></sc-for>
+        <button class="pbtn" type="button" onClick="{{ nextPage }}" aria-label="下一页"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M6.4 3.4L10.2 8l-3.8 4.6"></path></svg></button>
+        <div class="pgoto"><span>前往</span><input value="{{ pageNo }}" aria-label="页码"><span>页</span></div>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ maskOn }}">
+  <div class="mask" onClick="{{ closeModal }}"></div>
+  </sc-if>
+
+  <sc-if value="{{ collectShow }}">
+  <div class="modal" role="dialog" aria-label="批量采集弹窗">
+    <div class="mo-h">
+      <b>{{ collectTitle }}</b>
+      <button class="mo-x" type="button" onClick="{{ closeModal }}" aria-label="关闭弹窗"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"></path></svg></button>
+    </div>
+    <div class="mo-b">
+      <p class="mo-desc">{{ collectDesc }}</p>
+      <div><span class="mo-lb">{{ collectWayLabel }}</span><span class="chips"><sc-for list="{{ ways }}" as="w"><button class="chip" type="button" data-on="{{ w.active }}" onClick="{{ w.pick }}">{{ w.label }}</button></sc-for></span></div>
+      <div><span class="mo-lb">{{ collectInputLabel }}</span><div class="mo-in">{{ collectInputText }}</div></div>
+    </div>
+    <div class="mo-f">
+      <button class="btn b2" type="button" onClick="{{ closeModal }}">{{ collectCancel }}</button>
+      <button class="btn b1" type="button" onClick="{{ submitCollect }}">{{ collectSubmit }}</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ tagShow }}">
+  <div class="modal sm" role="dialog" aria-label="设置 logo 标签弹窗">
+    <div class="mo-h">
+      <b>{{ tagTitle }}</b>
+      <button class="mo-x" type="button" onClick="{{ closeModal }}" aria-label="关闭弹窗"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"></path></svg></button>
+    </div>
+    <div class="mo-b">
+      <p class="mo-desc">{{ tagDesc }}</p>
+      <div><span class="mo-lb">{{ tagInputLabel }}</span><div class="mo-in one">{{ tagInputText }}</div></div>
+      <div><span class="mo-lb">{{ tagChipsLabel }}</span><span class="chips"><sc-for list="{{ tagChips }}" as="tc"><button class="chip" type="button" data-on="{{ tc.on }}" onClick="{{ tc.pick }}">{{ tc.label }}</button></sc-for></span></div>
+    </div>
+    <div class="mo-f">
+      <button class="btn b2" type="button" onClick="{{ closeModal }}">{{ tagCancel }}</button>
+      <button class="btn b1" type="button" onClick="{{ submitTag }}">{{ tagSubmit }}</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ exportShow }}">
+  <div class="modal sm" role="dialog" aria-label="导出选中弹窗">
+    <div class="mo-h">
+      <b>{{ exportTitle }}</b>
+      <button class="mo-x" type="button" onClick="{{ closeModal }}" aria-label="关闭弹窗"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"></path></svg></button>
+    </div>
+    <div class="mo-b">
+      <p class="mo-desc">{{ exportDesc }}</p>
+      <div><span class="mo-lb">{{ exportFmtLabel }}</span><span class="seg"><sc-for list="{{ fmts }}" as="f"><button type="button" data-active="{{ f.active }}" onClick="{{ f.pick }}">{{ f.label }}</button></sc-for></span></div>
+    </div>
+    <div class="mo-f">
+      <button class="btn b2" type="button" onClick="{{ closeModal }}">{{ exportCancel }}</button>
+      <button class="btn b1" type="button" onClick="{{ submitExport }}">{{ exportSubmit }}</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ toastShow }}">
+  <div class="toast" onClick="{{ dismissToast }}" role="status"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"></circle><path d="M5.4 8.2l1.8 1.8 3.4-3.6"></path></svg><span>{{ toastText }}</span></div>
+  </sc-if>
+
+  <sc-if value="{{ modsOn }}">
+  <div class="mlist" aria-label="弹窗清单">
+    <span class="mt">弹窗清单</span>
+    <sc-for list="{{ mchips }}" as="m"><button class="mch" type="button" data-on="{{ m.on }}" onClick="{{ m.pick }}">{{ m.label }}</button></sc-for>
+    <span class="mhint">点按独占显示 · 再点隐藏</span>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ docsOn }}">
+  <div class="rail" aria-label="开发说明">
+    <div class="note head">
+      <div style="flex:1"><b>{{ docTitle }}</b><span class="s">每张说明卡是独立元素：选中哪张卡，右侧 Tweaks 面板就只编辑这张卡的标题和正文 · 换行＝分段</span></div>
+      <button class="docs-x" type="button" onClick="{{ toggleDocs }}" aria-label="隐藏开发说明"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"></path></svg></button>
+    </div>
+    <div class="note" data-hl="{{ f1 }}"><span class="dno">1</span><div class="tx"><b>{{ doc1T }}</b><p class="pl">{{ doc1B }}</p></div></div>
+    <div class="note" data-hl="{{ f2 }}"><span class="dno">2</span><div class="tx"><b>{{ doc2T }}</b><p class="pl">{{ doc2B }}</p></div></div>
+    <div class="note" data-hl="{{ f3 }}"><span class="dno">3</span><div class="tx"><b>{{ doc3T }}</b><p class="pl">{{ doc3B }}</p></div></div>
+    <div class="note" data-hl="{{ f4 }}"><span class="dno">4</span><div class="tx"><b>{{ doc4T }}</b><p class="pl">{{ doc4B }}</p></div></div>
+    <div class="note" data-hl="{{ f5 }}"><span class="dno">5</span><div class="tx"><b>{{ doc5T }}</b><p class="pl">{{ doc5B }}</p></div></div>
+  </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;docTitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;开发说明 · 数据口径&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc1T&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;数据来源与获取 · 平台切换&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc1B&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;平台切换（Temu / Shein）即列表查询的 platform 参数，切换后整页重新拉取，右上数据源文案同步更新（“近 90 天”为采集快照窗口）。\n\n图案数据三路入库：\na) 定时采集任务抓取平台商品图并裁切图案区；\nc) AI 生图产物回流（自动带生图记录）。\n&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc2T&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;筛选维度与字段口径&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc2B&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;11 组筛选与列表字段一一对应：来源、店铺类型、品类一级 / 末级（级联联动）、图案款次区间、是否使用、总销量区间、首次上架时间、logo 标签、生图记录、图案元素（chip 多选）、侵权结果（chip 多选）。\n元素标签＝图像识别自动打标 + 人工修正，是元素筛选与推荐的主要口径。行内多选为 OR，行与行之间为 AND；「查询」触发请求，「重置」清空全部条件。&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc3T&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;排序 · 批量选择 · 操作出口&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc3B&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;排序三档：最新上架（首次上架时间降序）/ 销量最高（总销量降序）/ 出现频次最高（款次降序）。\n全选仅作用于当前页；「已选 N 项」为会话级跨页累计。批量操作均作用于选中集合：设置 logo 标签＝批量写入标记；AI 生图＝携带所选图案为参考图跳转生图工具；加入工作流＝进入图案处理流程；页头「导出选中」＝原图 + 元数据打包。&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc4T&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;图案卡 · 同款聚合口径（核心）&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc4B&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;一张卡＝一个同款图案聚合主记录：以主视觉特征向量去重，同款多链接合并为一条。\n总销量＝同款各在售链接销量之和；图案款次＝同款在售链接 / 变体数；元素标签＝识别标签（展示前 2 个）；侵权类型＝「风险检测 · 侵权检测」任务异步回写（绿＝未侵权 / 灰＝未检测）；生图记录＝以该图案为参考图的 AI 生图次数；首次上架＝同款最早链接上架日；底部灰条＝品类路径（一级 · 末级）。&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc5T&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;分页与勾选保留&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc5B&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;服务端分页，默认 120 条 / 页（可选 60 / 240）；页码跳转校验 1–84；翻页后勾选保留（会话级），刷新页面即清空。&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1290},&quot;collectInitialOpen&quot;:{&quot;editor&quot;:&quot;bool&quot;,&quot;default&quot;:false,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;（弃用）弹窗初始打开——已改为弹窗清单独占模式&quot;},&quot;collectTitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;新建批量采集任务&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗标题&quot;},&quot;collectDesc&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;从 Temu / Shein 抓取图案素材，任务完成后自动去重入库，可在「生成记录」查看进度。&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗说明文字&quot;},&quot;collectWayLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;采集方式&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;采集方式标签&quot;},&quot;collectInputLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;关键词 / 链接（每行一个，最多 200 条）&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;输入框标签&quot;},&quot;collectInputText&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;floral print dress\nkawaii corgi tee\nhttps://www.temu.com/goods-123.html&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;输入框内容&quot;},&quot;collectCancel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;取消&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;取消按钮文字&quot;},&quot;collectSubmit&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;创建任务&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;提交按钮文字&quot;},&quot;collectOkText&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;采集任务已创建，正在后台运行，完成后将通知你&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;Toast 成功文案&quot;},&quot;tagTitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;设置 logo 标签&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·设置标签 标题&quot;},&quot;tagDesc&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;为选中的图案批量设置 logo 标签，标记将写入图案元数据，并同步更新筛选口径中的「logo 标签」维度。&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·设置标签 说明文字&quot;},&quot;tagInputLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;新增标签（回车确认，每个图案最多 5 个）&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·设置标签 输入标签&quot;},&quot;tagInputText&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;无 logo&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·设置标签 输入内容&quot;},&quot;tagChipsLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;常用标签&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·设置标签 常用标签行&quot;},&quot;tagCancel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;取消&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·设置标签 取消按钮&quot;},&quot;tagSubmit&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;保存标签&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·设置标签 提交按钮&quot;},&quot;tagOkText&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;logo 标签已更新&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;Toast·设置标签 成功文案&quot;},&quot;exportTitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;导出选中图案&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·导出 标题&quot;},&quot;exportDesc&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;将导出当前选中的图案，打包为 ZIP 下载。导出内容可选：原图与元数据、仅原图、仅元数据表格（CSV）。&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·导出 说明文字&quot;},&quot;exportFmtLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;导出内容&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·导出 格式标签&quot;},&quot;exportCancel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;取消&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·导出 取消按钮&quot;},&quot;exportSubmit&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;确认导出&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;弹窗·导出 提交按钮&quot;},&quot;exportOkText&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;已开始导出，完成后可在下载中心查看&quot;,&quot;section&quot;:&quot;弹窗与Toast&quot;,&quot;label&quot;:&quot;Toast·导出 成功文案&quot;}}">
+const CARDS = [
+  { id: 1,  img: 'images/pattern-01.jpg', title: '涂鸦艺术字', sales: '12.4万', uses: 38, tag1: '艺术字', tag2: '涂鸦', risk: '未侵权', riskKey: 'safe', gen: 12, date: '2026-08-12', badge: '艺术字', catLine: '艺术字 · 涂鸦' },
+  { id: 2,  img: 'images/pattern-02.jpg', title: '柯基卡通', sales: '8.6万',  uses: 26, tag1: '动物', tag2: '卡通', risk: '未侵权', riskKey: 'safe', gen: 5,  date: '2026-09-03', badge: '动物', catLine: '动物 · 卡通' },
+  { id: 3,  img: 'images/pattern-03.jpg', title: '热带棕榈叶', sales: '15.2万', uses: 44, tag1: '自然风光', tag2: '热带', risk: '未检测', riskKey: 'none', gen: 18, date: '2026-07-21', badge: '自然风光', catLine: '自然风光 · 热带' },
+  { id: 4,  img: 'images/pattern-04.jpg', title: '孟菲斯几何', sales: '6.1万',  uses: 19, tag1: '几何图形', tag2: '复古', risk: '未侵权', riskKey: 'safe', gen: 3,  date: '2026-09-28', badge: '几何图形', catLine: '几何图形 · 复古' },
+  { id: 5,  img: 'images/pattern-05.jpg', title: '水彩野花', sales: '9.8万',  uses: 31, tag1: '花卉', tag2: '水彩', risk: '未侵权', riskKey: 'safe', gen: 8,  date: '2026-08-05', badge: '花卉', catLine: '花卉 · 水彩' },
+  { id: 6,  img: 'images/pattern-06.jpg', title: '蓝闪蝶', sales: '21.6万', uses: 57, tag1: '蝴蝶', tag2: '昆虫', risk: '未侵权', riskKey: 'safe', gen: 24, date: '2026-06-14', badge: '蝴蝶', catLine: '蝴蝶 · 昆虫' },
+  { id: 7,  img: 'images/pattern-07.jpg', title: '圣诞驯鹿', sales: '4.3万',  uses: 12, tag1: '节日', tag2: '圣诞', risk: '未检测', riskKey: 'none', gen: 2,  date: '2026-10-02', badge: '节日', catLine: '节日 · 圣诞' },
+  { id: 8,  img: 'images/pattern-08.jpg', title: '青海波', sales: '7.7万',  uses: 22, tag1: '条纹', tag2: '日式', risk: '未侵权', riskKey: 'safe', gen: 6,  date: '2026-09-11', badge: '条纹', catLine: '条纹 · 日式' },
+  { id: 9,  img: 'images/pattern-09.jpg', title: 'Y2K 星星', sales: '18.9万', uses: 49, tag1: '星空', tag2: 'Y2K', risk: '未侵权', riskKey: 'safe', gen: 31, date: '2026-07-30', badge: '星空', catLine: '星空 · Y2K' },
+  { id: 10, img: 'images/pattern-10.jpg', title: '草莓甜心', sales: '11.2万', uses: 28, tag1: '水果', tag2: '卡通', risk: '未侵权', riskKey: 'safe', gen: 9,  date: '2026-08-19', badge: '水果', catLine: '水果 · 卡通' },
+  { id: 11, img: 'images/pattern-11.jpg', title: '经典豹纹', sales: '13.5万', uses: 35, tag1: '动物纹', tag2: '轻奢', risk: '未检测', riskKey: 'none', gen: 14, date: '2026-08-01', badge: '动物纹', catLine: '动物纹 · 轻奢' },
+  { id: 12, img: 'images/pattern-12.jpg', title: '学院格纹', sales: '5.4万',  uses: 16, tag1: '条纹', tag2: '学院', risk: '未侵权', riskKey: 'safe', gen: 4,  date: '2026-09-22', badge: '条纹', catLine: '条纹 · 学院' }
+];
+const ELEM_LABELS = ['艺术字', '动物', '花卉', '几何图形', '自然风光', '蝴蝶', '节日', '星空'];
+
+class Component extends DCLogic {
+  state = { platform: 'temu', sort: 'new', sel: [], page: 1, use: 2, elems: [], risks: [], docs: true, docFocus: 0, open: '', solo: '', mods: false, toast: false, toastPin: true, toastText: '', colWay: 'kw', colFmt: 'both', tagPicks: [] };
+
+  selList() { return this.state.sel || []; }
+
+  toggleCard(id) {
+    const sel = this.selList().slice();
+    const i = sel.indexOf(id);
+    if (i >= 0) sel.splice(i, 1); else sel.push(id);
+    this.setState({ sel });
+  }
+
+  toggleAll() {
+    const all = this.selList().length === CARDS.length;
+    this.setState({ sel: all ? [] : CARDS.map((c) => c.id) });
+  }
+
+  toggleFrom(listName, label) {
+    const list = (this.state[listName] || []).slice();
+    const i = list.indexOf(label);
+    if (i >= 0) list.splice(i, 1); else list.push(label);
+    this.setState({ [listName]: list });
+  }
+
+  goPage(n) {
+    const p = Math.max(1, Math.min(84, n));
+    this.setState({ page: p });
+  }
+
+  closeCollect() {
+    this.setState({ open: '' });
+  }
+
+  openModal(key) {
+    this.setState({ open: key });
+  }
+
+  closeModal() {
+    this.setState({ open: '' });
+  }
+
+  soloModal(key) {
+    this.setState({ solo: this.state.solo === key ? '' : key });
+  }
+
+  toggleTagChip(label) {
+    const list = (this.state.tagPicks || []).slice();
+    const i = list.indexOf(label);
+    if (i >= 0) list.splice(i, 1); else list.push(label);
+    this.setState({ tagPicks: list });
+  }
+
+  fireToast(text) {
+    this.setState({ open: '', toast: true, toastPin: true, toastText: text });
+    this._armToast();
+  }
+
+  submitCollect() {
+    this.fireToast(String(this.props.collectOkText ?? ''));
+  }
+
+  submitTag() {
+    this.fireToast(String(this.props.tagOkText ?? ''));
+  }
+
+  submitExport() {
+    this.fireToast(String(this.props.exportOkText ?? ''));
+  }
+
+  _armToast() {
+    if (this._tt) clearTimeout(this._tt);
+    this._tt = setTimeout(() => {
+      this._tt = null;
+      this.setState({ toast: false });
+    }, 3000);
+  }
+
+  dismissToast() {
+    if (this._tt) { clearTimeout(this._tt); this._tt = null; }
+    this.setState({ toast: false, toastPin: false });
+  }
+
+  renderVals() {
+    const st = this.state;
+    const sel = this.selList();
+    const sort = st.sort;
+
+    const plats = [
+      { label: 'Temu', active: st.platform === 'temu', pick: () => this.setState({ platform: 'temu' }) },
+      { label: 'Shein', active: st.platform === 'shein', pick: () => this.setState({ platform: 'shein' }) }
+    ];
+    const sorts = [
+      { label: '最新上架', active: sort === 'new', pick: () => this.setState({ sort: 'new' }) },
+      { label: '销量最高', active: sort === 'sales', pick: () => this.setState({ sort: 'sales' }) },
+      { label: '出现频次最高', active: sort === 'freq', pick: () => this.setState({ sort: 'freq' }) }
+    ];
+    const uses = [
+      { label: '全部', active: st.use === 0, pick: () => this.setState({ use: 0 }) },
+      { label: '已使用', active: st.use === 1, pick: () => this.setState({ use: 1 }) },
+      { label: '未使用', active: st.use === 2, pick: () => this.setState({ use: 2 }) }
+    ];
+    const elems = ELEM_LABELS.map((label) => ({
+      label,
+      on: (st.elems || []).indexOf(label) >= 0,
+      pick: () => this.toggleFrom('elems', label)
+    }));
+    const risks = ['未侵权', '未检测', '检测中'].map((label) => ({
+      label,
+      on: (st.risks || []).indexOf(label) >= 0,
+      pick: () => this.toggleFrom('risks', label)
+    }));
+
+    const cards = CARDS.map((c) => ({
+      img: c.img,
+      title: c.title,
+      sales: c.sales,
+      uses: c.uses + ' 款',
+      tag1: c.tag1,
+      tag2: c.tag2,
+      risk: c.risk,
+      riskKey: c.riskKey,
+      gen: c.gen > 0 ? c.gen + ' 次' : '—',
+      date: c.date,
+      badge: c.badge,
+      catLine: c.catLine,
+      sel: sel.indexOf(c.id) >= 0,
+      toggle: () => this.toggleCard(c.id)
+    }));
+
+    const pageLabels = [1, 2, 3, 4, 5, 6, '…', 84];
+    const pages = pageLabels.map((p) => ({
+      label: String(p),
+      gap: p === '…',
+      active: p === st.page,
+      pick: () => { if (p !== '…') this.goPage(Number(p)); }
+    }));
+
+    return {
+      docsOn: !!st.docs,
+      docsOnAttr: st.docs ? 'true' : 'false',
+      docTitle: String(this.props.docTitle ?? ''),
+      f1: st.docFocus === 1 ? 'true' : 'false',
+      f2: st.docFocus === 2 ? 'true' : 'false',
+      f3: st.docFocus === 3 ? 'true' : 'false',
+      f4: st.docFocus === 4 ? 'true' : 'false',
+      f5: st.docFocus === 5 ? 'true' : 'false',
+      toggleDocs: () => this.setState({ docs: !st.docs, docFocus: 0 }),
+      pin1: () => this.setState({ docs: true, docFocus: 1 }),
+      pin2: () => this.setState({ docs: true, docFocus: 2 }),
+      pin3: () => this.setState({ docs: true, docFocus: 3 }),
+      pin4: () => this.setState({ docs: true, docFocus: 4 }),
+      pin5: () => this.setState({ docs: true, docFocus: 5 }),
+      modsOn: !!st.mods,
+      modsOnAttr: st.mods ? 'true' : 'false',
+      toggleMods: () => this.setState({ mods: !st.mods }),
+      maskOn: !!st.open,
+      collectShow: st.open === 'collect' || st.solo === 'collect',
+      tagShow: st.open === 'tag' || st.solo === 'tag',
+      exportShow: st.open === 'export' || st.solo === 'export',
+      openCollect: () => this.openModal('collect'),
+      openTag: () => this.openModal('tag'),
+      openExport: () => this.openModal('export'),
+      closeModal: () => this.closeModal(),
+      submitCollect: () => this.submitCollect(),
+      submitTag: () => this.submitTag(),
+      submitExport: () => this.submitExport(),
+      dismissToast: () => this.dismissToast(),
+      mchips: [
+        { label: '批量采集', on: st.solo === 'collect', pick: () => this.soloModal('collect') },
+        { label: '设置 logo 标签', on: st.solo === 'tag', pick: () => this.soloModal('tag') },
+        { label: '导出选中', on: st.solo === 'export', pick: () => this.soloModal('export') }
+      ],
+      toastShow: !!st.toast || (!!st.docs && st.toastPin !== false),
+      toastText: st.toastText || String(this.props.collectOkText ?? ''),
+      tagTitle: String(this.props.tagTitle ?? ''),
+      tagDesc: String(this.props.tagDesc ?? ''),
+      tagInputLabel: String(this.props.tagInputLabel ?? ''),
+      tagInputText: String(this.props.tagInputText ?? ''),
+      tagChipsLabel: String(this.props.tagChipsLabel ?? ''),
+      tagCancel: String(this.props.tagCancel ?? ''),
+      tagSubmit: String(this.props.tagSubmit ?? ''),
+      tagChips: ['无 logo', '有 logo', '待确认', '自有 IP', '授权中'].map((label) => ({
+        label,
+        on: (st.tagPicks || []).indexOf(label) >= 0,
+        pick: () => this.toggleTagChip(label)
+      })),
+      fmts: [
+        { label: '原图 + 元数据', active: st.colFmt === 'both', pick: () => this.setState({ colFmt: 'both' }) },
+        { label: '仅原图', active: st.colFmt === 'img', pick: () => this.setState({ colFmt: 'img' }) },
+        { label: '元数据表格 (CSV)', active: st.colFmt === 'csv', pick: () => this.setState({ colFmt: 'csv' }) }
+      ],
+      exportTitle: String(this.props.exportTitle ?? ''),
+      exportDesc: String(this.props.exportDesc ?? ''),
+      exportFmtLabel: String(this.props.exportFmtLabel ?? ''),
+      exportCancel: String(this.props.exportCancel ?? ''),
+      exportSubmit: String(this.props.exportSubmit ?? ''),
+      collectTitle: String(this.props.collectTitle ?? ''),
+      collectDesc: String(this.props.collectDesc ?? ''),
+      collectWayLabel: String(this.props.collectWayLabel ?? ''),
+      collectInputLabel: String(this.props.collectInputLabel ?? ''),
+      collectInputText: String(this.props.collectInputText ?? ''),
+      collectCancel: String(this.props.collectCancel ?? ''),
+      collectSubmit: String(this.props.collectSubmit ?? ''),
+      collectOkText: String(this.props.collectOkText ?? ''),
+      ways: [
+        { label: '关键词', active: st.colWay === 'kw', pick: () => this.setState({ colWay: 'kw' }) },
+        { label: '店铺链接', active: st.colWay === 'shop', pick: () => this.setState({ colWay: 'shop' }) },
+        { label: '商品链接', active: st.colWay === 'goods', pick: () => this.setState({ colWay: 'goods' }) }
+      ],
+      plats,
+      sourceText: st.platform === 'temu' ? '数据源：Temu 全站图案 · 近 90 天' : '数据源：Shein 全站图案 · 近 90 天',
+      sorts,
+      uses,
+      elems,
+      risks,
+      cards,
+      selCount: sel.length,
+      allSel: sel.length === CARDS.length && CARDS.length > 0,
+      toggleAll: () => this.toggleAll(),
+      pages,
+      pageNo: String(st.page),
+      prevPage: () => this.goPage(st.page - 1),
+      nextPage: () => this.goPage(st.page + 1)
+    };
+  }
+}
+</script>
+</body>
+</html>

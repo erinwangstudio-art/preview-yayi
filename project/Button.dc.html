@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>按钮</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.yy{--p:#6366F1;--ph:#4F46E5;--pp:#4338CA;--brand:#A5B4FC;--ink:#18181B;--ink2:#27272A;--muted:#71717A;--faint:#A1A1AA;--line:#E4E4E7;--line2:#D4D4D8;--bg:#FFFFFF;--bg2:#FAFAFA;--danger:#BE123C;--dangerLine:#FECDD3;--dangerBg:#FFF1F2;--focus:0 0 0 3px rgba(99,102,241,.18);--r:8px;--font:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC',system-ui,sans-serif}
+.bt{display:inline-flex;align-items:center;justify-content:center;gap:7px;box-sizing:border-box;white-space:nowrap;font-family:inherit;border:1px solid transparent;cursor:pointer;text-decoration:none;transition:background .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease}
+.bt[data-size="sm"]{height:28px;padding:0 11px;font-size:12.5px;border-radius:6px}
+.bt[data-size="md"]{height:32px;padding:0 14px;font-size:13px;border-radius:8px}
+.bt[data-size="lg"]{height:38px;padding:0 18px;font-size:13.5px;border-radius:8px}
+.bt[data-block="true"]{width:100%}
+.bt[data-variant="primary"]{background:var(--p);border-color:var(--p);color:#FFFFFF;font-weight:500}
+.bt[data-variant="primary"]:hover{background:var(--ph);border-color:var(--ph)}
+.bt[data-variant="primary"]:active{background:var(--pp);border-color:var(--pp)}
+.bt[data-variant="secondary"]{background:#FFFFFF;border-color:var(--line);color:var(--ink2)}
+.bt[data-variant="secondary"]:hover{border-color:var(--line2);background:#FAFAFA}
+.bt[data-variant="secondary"]:active{background:#F4F4F5}
+.bt[data-variant="ghost"]{background:transparent;border-color:transparent;color:var(--p)}
+.bt[data-variant="ghost"]:hover{background:#EEF2FF}
+.bt[data-variant="ghost"]:active{background:#E0E7FF}
+.bt[data-variant="danger"]{background:#FFFFFF;border-color:var(--dangerLine);color:#BE123C}
+.bt[data-variant="danger"]:hover{background:var(--dangerBg)}
+.bt:focus-visible{outline:2px solid var(--p);outline-offset:2px}
+.bt[data-disabled="true"]{opacity:.55;cursor:not-allowed;box-shadow:none;pointer-events:none}
+.bt[data-loading="true"]{opacity:.7;cursor:progress;pointer-events:none}
+.bt-spin{animation:btspin .8s linear infinite;flex:0 0 auto}
+@keyframes btspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.bt,.bt-spin{transition:none;animation:none}}
+</style>
+</helmet>
+
+<div class="yy" style="width:100%;height:100%;box-sizing:border-box;display:flex;align-items:center;font-family:var(--font);-webkit-font-smoothing:antialiased">
+
+<button class="bt" type="button" data-variant="{{ variant }}" data-size="{{ size }}" data-block="{{ blockAttr }}" data-disabled="{{ disabledAttr }}" data-loading="{{ loadingAttr }}" aria-disabled="{{ offAttr }}" aria-busy="{{ loadingAttr }}" disabled="{{ off }}" tabindex="{{ tab }}" onClick="{{ onClick }}">
+
+<sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+<svg class="bt-spin" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1-6.4 6.4" stroke-linecap="round"></path></svg>
+</sc-if>
+
+<span>{{ label }}</span>
+
+</button>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"确认发货","section":"内容"},"variant":{"editor":"enum","options":["primary","secondary","ghost","danger"],"default":"primary","section":"样式"},"size":{"editor":"enum","options":["sm","md","lg"],"default":"md","section":"样式"},"block":{"editor":"boolean","default":false,"section":"样式"},"loading":{"editor":"boolean","default":false,"section":"状态"},"disabled":{"editor":"boolean","default":false,"section":"状态"},"$preview":{"width":120,"height":64}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const loading = this.props.loading === true || this.props.loading === 'true';
+    const disabled = this.props.disabled === true || this.props.disabled === 'true';
+    const block = this.props.block === true || this.props.block === 'true';
+    const off = disabled || loading;
+    return {
+      label: this.props.label ?? '按钮',
+      variant: this.props.variant ?? 'primary',
+      size: this.props.size ?? 'md',
+      blockAttr: block ? 'true' : 'false',
+      loading,
+      loadingAttr: loading ? 'true' : 'false',
+      disabled: off,
+      off,
+      offAttr: off ? 'true' : 'false',
+      disabledAttr: disabled ? 'true' : 'false',
+      tab: off ? '-1' : '0',
+      onClick: typeof this.props.onClick === 'function' ? this.props.onClick : undefined
+    };
+  }
+}
+</script>
+</body>
+</html>

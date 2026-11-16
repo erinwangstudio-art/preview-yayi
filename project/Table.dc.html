@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>数据表格</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.yy{--p:#6366F1;--ink:#18181B;--ink2:#27272A;--muted:#71717A;--line:#E4E4E7;--bg2:#FAFAFA;--font:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC',system-ui,sans-serif}
+.tbl-wrap{width:100%;box-sizing:border-box;font-family:var(--font);-webkit-font-smoothing:antialiased}
+.tbl-title{font-size:14px;color:var(--ink);font-weight:600;margin-bottom:12px}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;color:var(--ink)}
+.tbl th{background:var(--bg2);color:var(--ink2);font-weight:600;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;font-size:12.5px}
+.tbl td{border-bottom:1px solid #F4F4F5;vertical-align:middle}
+.tbl[data-density="compact"] th,.tbl[data-density="compact"] td{padding:7px 12px}
+.tbl[data-density="md"] th,.tbl[data-density="md"] td{padding:10px 14px}
+.tbl[data-density="comfortable"] th,.tbl[data-density="comfortable"] td{padding:14px 16px}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tbody tr:hover td{background:#FAFAFA}
+.tbl[data-sticky="true"] thead th{position:sticky;top:0;z-index:1;box-shadow:inset 0 -1px 0 var(--line)}
+.tbl[data-variant="zebra"] tbody tr:nth-child(even) td{background:#FAFAFA}
+.tbl[data-variant="zebra"] tbody tr:hover td{background:#FAFAFA}
+.tbl[data-variant="bordered"] th,.tbl[data-variant="bordered"] td{border:1px solid var(--line)}
+.tbl[data-variant="bordered"] tbody tr:last-child td{border-bottom:1px solid var(--line)}
+.th-btn{display:inline-flex;align-items:center;gap:4px;width:100%;padding:0;border:0;background:none;font:inherit;font-size:inherit;color:inherit;cursor:pointer;text-align:left}
+.th-btn:hover{color:var(--p)}
+.th-btn:focus-visible{outline:2px solid var(--p);outline-offset:3px;border-radius:3px}
+.th-ind{font-size:10px;line-height:1;color:var(--p);opacity:0;transition:opacity .12s ease}
+.th-btn[data-sorted="true"] .th-ind{opacity:1}
+.tbl .imgcell{width:40px;height:40px;border-radius:6px;background:#F4F4F5;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:14px;color:var(--p);font-weight:600}
+.tbl .imgcell img{width:100%;height:100%;object-fit:cover}
+.tbl .empty{padding:28px 14px;text-align:center;color:var(--muted);font-size:12.5px}
+@media (prefers-reduced-motion:reduce){.th-ind{transition:none}}
+</style>
+</helmet>
+
+<div class="yy tbl-wrap">
+
+<sc-if value="{{ hasTitle }}">
+<div class="tbl-title">{{ title }}</div>
+</sc-if>
+
+<div style="{{ wrapStyle }}">
+
+<table class="tbl" data-variant="{{ variant }}" data-density="{{ density }}" data-sticky="{{ stickyAttr }}">
+<thead>
+<tr>
+<sc-for list="{{ cols }}" as="c">
+<th scope="col" aria-sort="{{ c.ariaSort }}">
+<sc-if value="{{ c.sortable }}">
+<button class="th-btn" type="button" data-sorted="{{ c.sorted }}" onClick="{{ c.pick }}">
+<span>{{ c.label }}</span>
+<span class="th-ind" aria-hidden="true">{{ c.ind }}</span>
+</button>
+</sc-if>
+<sc-if value="{{ c.plain }}">
+<span>{{ c.label }}</span>
+</sc-if>
+</th>
+</sc-for>
+</tr>
+</thead>
+<tbody>
+
+<sc-if value="{{ hasRows }}">
+<sc-for list="{{ rows }}" as="row">
+<tr>
+<sc-for list="{{ row.cells }}" as="cell">
+<td>
+<sc-if value="{{ cell.isImg }}">
+<div class="imgcell"><img src="{{ cell.img }}" alt="" /></div>
+</sc-if>
+<sc-if value="{{ cell.isTxt }}">
+<span>{{ cell.txt }}</span>
+</sc-if>
+</td>
+</sc-for>
+</tr>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{ isEmpty }}">
+<tr><td class="empty" colspan="{{ colCount }}">{{ emptyText }}</td></tr>
+</sc-if>
+
+</tbody>
+</table>
+
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"title":{"editor":"text","default":"订单明细","section":"内容"},"columns":{"editor":"text","default":"商品,数量,单价,金额","section":"内容"},"rows":{"editor":"text","default":"[img]保温杯,2,¥59,¥118\n[img]帆布包,1,¥89,¥89\n[img]马克杯,3,¥25,¥75","section":"内容"},"variant":{"editor":"enum","options":["plain","zebra","bordered"],"default":"plain","section":"样式"},"density":{"editor":"enum","options":["compact","md","comfortable"],"default":"md","section":"样式"},"sortable":{"editor":"boolean","default":true,"section":"交互"},"sticky":{"editor":"boolean","default":false,"section":"样式"},"maxHeight":{"editor":"int","default":0,"min":0,"max":900,"unit":"px","section":"样式"},"emptyText":{"editor":"text","default":"暂无数据","section":"内容"},"$preview":{"width":480,"height":220}}'>
+class Component extends DCLogic {
+  state = {};
+
+  splitCells(str) {
+    const raw = String(str ?? '');
+    const pattern = raw.includes('|') ? /\|/ : /[|,，]/;
+    return raw.split(pattern).map((s) => s.trim());
+  }
+
+  parseCell(raw) {
+    const s = String(raw ?? '').trim();
+    if (s.startsWith('[img]')) {
+      const url = s.slice(5).trim();
+      return { isImg: true, isTxt: false, img: url || '' };
+    }
+    return { isImg: false, isTxt: true, txt: s, raw: s };
+  }
+
+  rank(cell) {
+    const text = String(cell?.txt ?? '').replace(/[¥$%,\s]/g, '');
+    const num = Number(text);
+    return text !== '' && !isNaN(num) ? num : null;
+  }
+
+  renderVals() {
+    const truthy = (v) => v === true || v === 'true';
+    const cols = this.splitCells(this.props.columns).filter(Boolean);
+    const sortable = this.props.sortable === undefined ? true : truthy(this.props.sortable);
+
+    let rows = String(this.props.rows ?? '')
+      .split(/[\n\r]+/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) => {
+        const cells = this.splitCells(line);
+        while (cells.length < cols.length) cells.push('');
+        return { cells: cells.slice(0, cols.length).map((c) => this.parseCell(c)) };
+      });
+
+    const sm = this.state.sort || { idx: -1, dir: 1 };
+    if (sortable && sm.idx >= 0) {
+      const idx = sm.idx;
+      rows = rows.slice().sort((a, b) => {
+        const ca = a.cells[idx], cb = b.cells[idx];
+        const na = this.rank(ca), nb = this.rank(cb);
+        if (na !== null && nb !== null) return (na - nb) * sm.dir;
+        const sa = String(ca?.txt ?? ca?.img ?? ''), sb = String(cb?.txt ?? cb?.img ?? '');
+        return sa.localeCompare(sb, 'zh-CN') * sm.dir;
+      });
+    }
+
+    const maxH = Number(this.props.maxHeight ?? 0) || 0;
+    const sticky = truthy(this.props.sticky);
+
+    return {
+      title: this.props.title ?? '',
+      hasTitle: (this.props.title ?? '') !== '',
+      cols: cols.map((label, i) => {
+        const sorted = sm.idx === i;
+        return {
+          label,
+          sortable,
+          plain: !sortable,
+          sorted,
+          ariaSort: sorted ? (sm.dir === 1 ? 'ascending' : 'descending') : 'none',
+          ind: sorted ? (sm.dir === 1 ? '↑' : '↓') : '↕',
+          pick: () => {
+            if (!sortable) return;
+            const dir = sm.idx === i ? -sm.dir : 1;
+            this.setState({ sort: { idx: i, dir } });
+          }
+        };
+      }),
+      colCount: cols.length,
+      rows,
+      hasRows: rows.length > 0,
+      isEmpty: rows.length === 0,
+      emptyText: this.props.emptyText ?? '暂无数据',
+      variant: ['plain', 'zebra', 'bordered'].includes(this.props.variant) ? this.props.variant : 'plain',
+      density: ['compact', 'md', 'comfortable'].includes(this.props.density) ? this.props.density : 'md',
+      stickyAttr: sticky ? 'true' : 'false',
+      wrapStyle: maxH > 0 ? `max-height:${maxH}px;overflow:auto` : 'overflow-x:auto'
+    };
+  }
+}
+</script>
+</body>
+</html>

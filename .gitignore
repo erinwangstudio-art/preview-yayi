@@ -1,0 +1,8 @@
+.artifact-server.json
+.artifact-server.log
+history/
+comments.json
+exports/
+.sharing.json
+.DS_Store
+node_modules/
