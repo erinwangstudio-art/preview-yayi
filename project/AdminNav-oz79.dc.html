@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>全局侧边菜单</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.yy{--font:Inter,-apple-system,'PingFang SC',system-ui,sans-serif}
+.yy a{color:inherit;text-decoration:none}
+.yy .sb{width:240px;height:100%;min-height:100%;box-sizing:border-box;background:#F7F7F8;border-right:1px solid #E4E4E7;display:flex;flex-direction:column;font-family:var(--font);-webkit-font-smoothing:antialiased;overflow:hidden}
+.yy .sb-h{height:64px;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E9E9EB;flex:0 0 auto}
+.yy .logo{width:30px;height:30px;border-radius:9px;background:#6366F1;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;flex:0 0 auto}
+.yy .sb-t{flex:1;font-size:15px;font-weight:500;color:#18181B}
+.yy .sb-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;padding:8px 0 2px;scrollbar-width:thin}
+.yy .grp{font-size:11px;color:#A1A1AA;padding:7px 20px 3px}
+.yy .nav{display:flex;align-items:center;gap:8px;height:32px;margin:1px 10px;padding:0 10px;border-radius:8px;font-size:13px;color:#71717A;border:1px solid transparent;transition:background .14s ease,color .14s ease}
+.yy .nav .ic{flex:0 0 auto;color:#A1A1AA;display:flex;align-items:center}
+.yy .nav:hover{background:#EDEDEF;color:#18181B}
+.yy .nav[data-active="true"]{background:#4F46E5;border-color:#4F46E5;color:#fff;font-weight:500}
+.yy .nav[data-active="true"] .ic{color:#fff}
+.yy .nav:focus-visible{outline:2px solid #6366F1;outline-offset:-2px}
+.yy .sep{height:1px;background:#E9E9EB;margin:6px 16px}
+.yy .sb-b{margin-top:auto;flex:0 0 auto;border-top:1px solid #E9E9EB;padding:10px 12px 12px}
+@media (prefers-reduced-motion:reduce){.yy .nav{transition:none}}
+</style>
+</helmet>
+
+<div class="yy sb">
+<div class="sb-h"><div class="logo" aria-hidden="true">Y</div><div class="sb-t">Yayi Design</div></div>
+<nav class="sb-scroll" aria-label="主导航">
+<div class="grp">工作区</div>
+<a href="YayiHome.dc.html" class="nav" data-active="{{ on.home }}" aria-current="{{ current.home }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="4.8" height="4.8" rx="1.1"></rect><rect x="8.7" y="2.5" width="4.8" height="4.8" rx="1.1"></rect><rect x="2.5" y="8.7" width="4.8" height="4.8" rx="1.1"></rect><rect x="8.7" y="8.7" width="4.8" height="4.8" rx="1.1"></rect></svg></span><span>工作台</span></a>
+<a href="#" class="nav" data-active="{{ on.inspire }}" aria-current="{{ current.inspire }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2a4 4 0 00-2.2 7.3V11h4.4V9.3A4 4 0 008 2z"></path><path d="M6.3 13.2h3.4"></path></svg></span><span>灵感广场</span></a>
+<a href="#" class="nav" data-active="{{ on.design }}" aria-current="{{ current.design }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2c2.2 1.6 3.2 3.8 3.2 6.4L9.6 11H6.4L4.8 8.4C4.8 5.8 5.8 3.6 8 2z"></path><circle cx="8" cy="6.3" r="1.1"></circle><path d="M6.4 11L5 13.8M9.6 11l1.4 2.8"></path></svg></span><span>智能开款</span></a>
+<a href="#" class="nav" data-active="{{ on.fulfill }}" aria-current="{{ current.fulfill }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><rect x="2" y="3.5" width="8.5" height="7" rx="0.8"></rect><path d="M10.5 6.5h2.6L14.8 8.6v1.9h-4.3"></path><circle cx="4.8" cy="12" r="1.2"></circle><circle cx="11.8" cy="12" r="1.2"></circle></svg></span><span>智能履约</span></a>
+<a href="#" class="nav" data-active="{{ on.records }}" aria-current="{{ current.records }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.8"></circle><path d="M8 4.9V8l2.1 1.6"></path></svg></span><span>生成记录</span></a>
+<div class="sep"></div>
+<div class="grp">资产</div>
+<a href="#" class="nav" data-active="{{ on.pattern }}" aria-current="{{ current.pattern }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="5.3" cy="5.3" r="2.1"></circle><circle cx="10.7" cy="5.3" r="2.1"></circle><circle cx="5.3" cy="10.7" r="2.1"></circle><rect x="8.8" y="8.8" width="3.8" height="3.8" rx="0.8"></rect></svg></span><span>图案库</span></a>
+<a href="#" class="nav" data-active="{{ on.layout }}" aria-current="{{ current.layout }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><rect x="2" y="2.5" width="12" height="11" rx="1.6"></rect><path d="M2 6.2h12M6.3 6.2v7.3"></path></svg></span><span>版型库</span></a>
+<div class="sep"></div>
+<div class="grp">运营</div>
+<a href="#" class="nav" data-active="{{ on.pricing }}" aria-current="{{ current.pricing }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8.8 2.2H13a1 1 0 011 1v4.2a1 1 0 01-.3.7l-5.9 5.9a1 1 0 01-1.4 0L2.9 9.5a1 1 0 010-1.4l5.6-5.6a1 1 0 01.3-.3z"></path><circle cx="10.8" cy="5.2" r="1.1"></circle></svg></span><span>智能核价</span></a>
+<a href="#" class="nav" data-active="{{ on.campaign }}" aria-current="{{ current.campaign }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M3 6.3v3.4h1.8L11 13V3L4.8 6.3z"></path><path d="M12.6 6.2a2.7 2.7 0 010 3.6"></path></svg></span><span>活动申报</span></a>
+<a href="#" class="nav" data-active="{{ on.stock }}" aria-current="{{ current.stock }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><rect x="2" y="7" width="5.2" height="7" rx="1"></rect><rect x="8.8" y="7" width="5.2" height="7" rx="1"></rect><path d="M3.6 7V4.2A1.2 1.2 0 014.8 3h6.4a1.2 1.2 0 011.2 1.2V7"></path></svg></span><span>库存同步</span></a>
+<a href="#" class="nav" data-active="{{ on.delist }}" aria-current="{{ current.delist }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2.5v7M5.2 6.7L8 9.5l2.8-2.8"></path><path d="M2.5 12v1a1 1 0 001 1h9a1 1 0 001-1v-1"></path></svg></span><span>商品下架</span></a>
+<div class="sep"></div>
+<div class="grp">经营</div>
+<a href="#" class="nav" data-active="{{ on.catalog }}" aria-current="{{ current.catalog }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M8 2.6V8h5.4A5.4 5.4 0 118 2.6z"></path></svg></span><span>货盘中心</span></a>
+<a href="#" class="nav" data-active="{{ on.products }}" aria-current="{{ current.products }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><rect x="2" y="3" width="2.2" height="2.2" rx="0.5"></rect><rect x="2" y="6.9" width="2.2" height="2.2" rx="0.5"></rect><rect x="2" y="10.8" width="2.2" height="2.2" rx="0.5"></rect><path d="M6.5 4.1h7.3M6.5 8h7.3M6.5 11.9h7.3"></path></svg></span><span>商品列表</span></a>
+<a href="Orders.dc.html" class="nav" data-active="{{ on.orders }}" aria-current="{{ current.orders }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="5.4" cy="12.6" r="1.1"></circle><circle cx="10.9" cy="12.6" r="1.1"></circle><path d="M2.4 2.8h1.9l2 8h6.1l1.7-6.3H5.2"></path></svg></span><span>订单列表</span></a>
+<a href="#" class="nav" data-active="{{ on.shop }}" aria-current="{{ current.shop }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M2.5 13.5V6.8L3.8 2.5h8.4l1.3 4.3v6.7z"></path><path d="M2.5 7.2c0 1.2 1 2 2.2 2s2.2-.8 2.2-2c0 1.2 1 2 2.2 2s2.2-.8 2.2-2c0 1.2 1 2 2.1 2"></path><path d="M6 13.5v-3h4v3"></path></svg></span><span>店铺管理</span></a>
+</nav>
+<div class="sb-b">
+<a href="Settings.dc.html" class="nav" data-active="{{ on.settings }}" aria-current="{{ current.settings }}"><span class="ic"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.2"></circle><path d="M8 2.2v1.5M8 12.3v1.5M2.2 8h1.5M12.3 8h1.5M3.9 3.9l1 1M11.1 11.1l1 1M12.1 3.9l-1 1M4.9 11.1l-1 1"></path></svg></span><span>设置</span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active": {"editor": "enum", "options": ["home", "inspire", "design", "fulfill", "records", "pattern", "layout", "pricing", "campaign", "stock", "delist", "catalog", "products", "orders", "shop", "settings"], "default": "home", "section": "状态"}, "$preview": {"width": 240, "height": 800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const KEYS = ["home", "inspire", "design", "fulfill", "records", "pattern", "layout", "pricing", "campaign", "stock", "delist", "catalog", "products", "orders", "shop", "settings"];
+    let a = this.props.active;
+    if (a === 'detail') a = 'orders';
+    if (KEYS.indexOf(a) < 0) a = 'home';
+    const on = {}, current = {};
+    for (const k of KEYS) {
+      on[k] = a === k;
+      current[k] = a === k ? 'page' : undefined;
+    }
+    return { on, current, noop: () => {} };
+  }
+}
+</script>
+</body>
+</html>

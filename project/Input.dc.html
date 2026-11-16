@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>输入框</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.yy{--p:#6366F1;--ph:#4F46E5;--ink:#18181B;--ink2:#27272A;--muted:#71717A;--faint:#A1A1AA;--line:#E4E4E7;--line2:#D4D4D8;--danger:#BE123C;--dangerBg:#FFF1F2;--font:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC',system-ui,sans-serif}
+.ip-group{display:flex;flex-direction:column;gap:6px;width:100%;box-sizing:border-box;font-family:var(--font);-webkit-font-smoothing:antialiased}
+.ip-label{font-size:12.5px;color:var(--ink2);line-height:1.4}
+.ip-req{color:var(--danger);margin-left:2px}
+.ip-box{display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:#FFFFFF;transition:border-color .14s ease,box-shadow .14s ease,background .14s ease}
+.ip-box:hover{border-color:var(--line2)}
+.ip-box:focus-within{border-color:var(--p);box-shadow:0 0 0 3px rgba(99,102,241,.14)}
+.ip-box[data-error="true"]{border-color:#F43F5E}
+.ip-box[data-error="true"]:focus-within{box-shadow:0 0 0 3px rgba(190,18,60,.14)}
+.ip-box[data-disabled="true"]{background:#FAFAFA;border-color:var(--line);cursor:not-allowed}
+.ip-box[data-size="sm"]{height:30px}
+.ip-box[data-size="md"]{height:34px}
+.ip-box[data-size="lg"]{height:38px}
+.ip{flex:1 1 auto;min-width:0;height:100%;padding:0;border:0;outline:none;background:transparent;font-family:inherit;color:var(--ink)}
+.ip[data-size="sm"]{font-size:12.5px}
+.ip[data-size="md"]{font-size:13px}
+.ip[data-size="lg"]{font-size:13.5px}
+.ip::placeholder{color:#A1A1AA}
+.ip:disabled{cursor:not-allowed}
+.ip-prefix{font-size:12.5px;color:var(--muted);flex:0 0 auto;line-height:1}
+.ip-clear{display:flex;align-items:center;justify-content:center;width:16px;height:16px;flex:0 0 auto;padding:0;border:0;border-radius:50%;background:#D4D4D8;color:#FFFFFF;font-size:11px;line-height:1;cursor:pointer}
+.ip-clear:hover{background:#A1A1AA}
+.ip-clear:focus-visible{outline:2px solid var(--p);outline-offset:2px}
+.ip-foot{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;min-height:15px}
+.ip-msg{font-size:11.5px;line-height:1.4;color:var(--faint)}
+.ip-msg[data-error="true"]{color:var(--danger)}
+.ip-count{font-size:11.5px;line-height:1.4;color:var(--faint);flex:0 0 auto;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.ip-box{transition:none}}
+</style>
+</helmet>
+
+<div class="yy" style="width:100%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center">
+
+<div class="ip-group">
+<sc-if value="{{ hasLabel }}">
+<label class="ip-label" for="{{ id }}">{{ label }}<sc-if value="{{ required }}"><span class="ip-req" aria-hidden="true">*</span></sc-if></label>
+</sc-if>
+
+<div class="ip-box" data-size="{{ size }}" data-error="{{ errorAttr }}" data-disabled="{{ disabledAttr }}">
+<sc-if value="{{ hasPrefix }}">
+<span class="ip-prefix">{{ prefix }}</span>
+</sc-if>
+<input class="ip" id="{{ id }}" name="{{ name }}" type="{{ type }}" data-size="{{ size }}" placeholder="{{ placeholder }}" value="{{ value }}" maxLength="{{ maxLength }}" aria-label="{{ ariaLabel }}" aria-invalid="{{ errorAttr }}" aria-required="{{ required }}" aria-describedby="{{ describedBy }}" disabled="{{ isDisabled }}" onChange="{{ onChange }}" />
+<sc-if value="{{ canClear }}">
+<button class="ip-clear" type="button" aria-label="清空输入" onClick="{{ clear }}">×</button>
+</sc-if>
+</div>
+
+<sc-if value="{{ hasFoot }}">
+<div class="ip-foot">
+<span class="ip-msg" id="{{ msgId }}" data-error="{{ errorAttr }}">{{ message }}</span>
+<sc-if value="{{ hasCount }}">
+<span class="ip-count">{{ count }}/{{ maxLength }}</span>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ noFoot }}">
+<div class="ip-foot" aria-hidden="true"></div>
+</sc-if>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"店铺名称","section":"内容"},"placeholder":{"editor":"text","default":"请输入店铺名称","section":"内容"},"value":{"editor":"text","default":"","section":"内容"},"hint":{"editor":"text","default":"将在订单小票与发票上显示","section":"内容"},"prefix":{"editor":"text","default":"","section":"内容"},"error":{"editor":"text","default":"","section":"内容"},"type":{"editor":"enum","options":["text","password","number","email","tel"],"default":"text","section":"内容"},"size":{"editor":"enum","options":["sm","md","lg"],"default":"md","section":"样式"},"maxLength":{"editor":"int","default":0,"min":0,"max":200,"section":"校验"},"required":{"editor":"boolean","default":false,"section":"校验"},"disabled":{"editor":"boolean","default":false,"section":"状态"},"clearable":{"editor":"boolean","default":true,"section":"交互"},"$preview":{"width":280,"height":96}}'>
+class Component extends DCLogic {
+  state = {};
+
+  uid = 'ip-' + Math.random().toString(36).slice(2, 8);
+
+  renderVals() {
+    const truthy = (v) => v === true || v === 'true';
+    const size = this.props.size ?? 'md';
+    const hint = String(this.props.hint ?? '');
+    const error = String(this.props.error ?? '');
+    const disabled = truthy(this.props.disabled);
+    const maxLength = Math.max(0, Number(this.props.maxLength ?? 0) || 0);
+    const value = String(this.state.value !== undefined ? this.state.value : (this.props.value ?? ''));
+    const message = error || hint;
+    const id = this.uid;
+    const msgId = id + '-msg';
+    const hasFoot = message !== '' || maxLength > 0;
+    const clearable = this.props.clearable === undefined ? true : truthy(this.props.clearable);
+
+    return {
+      id,
+      msgId,
+      name: id,
+      label: this.props.label ?? '字段',
+      hasLabel: (this.props.label ?? '') !== '',
+      noLabel: (this.props.label ?? '') === '',
+      ariaLabel: (this.props.label ?? '') === '' ? (this.props.placeholder || '输入框') : undefined,
+      placeholder: this.props.placeholder ?? '',
+      prefix: this.props.prefix ?? '',
+      hasPrefix: (this.props.prefix ?? '') !== '',
+      value,
+      type: ['text', 'password', 'number', 'email', 'tel'].includes(this.props.type) ? this.props.type : 'text',
+      size: ['sm', 'md', 'lg'].includes(size) ? size : 'md',
+      maxLength: maxLength > 0 ? maxLength : undefined,
+      count: value.length,
+      hasCount: maxLength > 0,
+      required: truthy(this.props.required),
+      disabled,
+      isDisabled: disabled,
+      disabledAttr: disabled ? 'true' : 'false',
+      error,
+      errorAttr: error ? 'true' : 'false',
+      message,
+      hasFoot,
+      noFoot: !hasFoot,
+      describedBy: hasFoot ? msgId : undefined,
+      canClear: clearable && value !== '' && !disabled,
+      clear: () => {
+        this.setState({ value: '' });
+        if (typeof document === 'undefined') return;
+        const el = document.getElementById(id);
+        if (el) el.focus();
+      },
+      onChange: (e) => this.setState({ value: e.target.value })
+    };
+  }
+}
+</script>
+</body>
+</html>

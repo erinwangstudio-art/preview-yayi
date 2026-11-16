@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>单选</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.yy{--p:#6366F1;--ph:#4F46E5;--ink:#18181B;--ink2:#27272A;--line2:#D4D4D8;--font:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC',system-ui,sans-serif}
+.rdo-group{display:flex;flex-direction:column;gap:8px;font-family:var(--font);-webkit-font-smoothing:antialiased}
+.rdo-label{font-size:12.5px;color:var(--ink2);font-weight:600;line-height:1.4}
+.rdo-wrap{display:flex}
+.rdo{position:relative;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink);line-height:1.45;padding:1px 0}
+.rdo-in{position:absolute;left:0;top:0;width:16px;height:16px;margin:0;opacity:0;cursor:pointer}
+.rdo .dot{width:16px;height:16px;box-sizing:border-box;border-radius:50%;border:1.5px solid var(--line2);background:#FFFFFF;display:flex;align-items:center;justify-content:center;transition:border-color .14s ease,box-shadow .14s ease;flex:0 0 auto}
+.rdo .dot::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--p);opacity:0;transform:scale(.4);transition:opacity .14s ease,transform .14s ease}
+.rdo[data-checked="true"] .dot{border-color:var(--p)}
+.rdo[data-checked="true"] .dot::after{opacity:1;transform:scale(1)}
+.rdo:not([data-disabled="true"]):hover .dot{border-color:var(--p)}
+.rdo-in:focus-visible + .dot{box-shadow:0 0 0 3px rgba(99,102,241,.20);border-color:var(--p)}
+.rdo[data-disabled="true"]{opacity:.5;cursor:not-allowed}
+.rdo[data-disabled="true"] .rdo-in{cursor:not-allowed}
+@media (prefers-reduced-motion:reduce){.rdo .dot,.rdo .dot::after{transition:none}}
+</style>
+</helmet>
+
+<div class="yy rdo-group" role="radiogroup" aria-label="{{ label }}">
+
+<sc-if value="{{ hasLabel }}">
+<div class="rdo-label">{{ label }}</div>
+</sc-if>
+
+<div class="rdo-wrap" style="flex-direction:{{ direction }};gap:{{ gap }}px">
+
+<sc-for list="{{ items }}" as="item">
+<label class="rdo" data-checked="{{ item.checked }}" data-disabled="{{ item.disabledAttr }}">
+<input class="rdo-in" type="radio" name="{{ groupName }}" checked="{{ item.checked }}" disabled="{{ item.isDisabled }}" onChange="{{ item.pick }}" value="{{ item.index }}" />
+<span class="dot" aria-hidden="true"></span>
+<span>{{ item.label }}</span>
+</label>
+</sc-for>
+
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"options":{"editor":"text","default":"全部订单\n待发货\n待收货\n已完成","section":"内容"},"label":{"editor":"text","default":"订单状态","section":"内容"},"value":{"editor":"int","default":0,"min":0,"max":20,"section":"内容"},"direction":{"editor":"enum","options":["row","column"],"default":"column","section":"样式"},"gap":{"editor":"int","default":12,"min":6,"max":40,"unit":"px","section":"样式"},"disabled":{"editor":"boolean","default":false,"section":"状态"},"$preview":{"width":200,"height":140}}'>
+class Component extends DCLogic {
+  state = {};
+
+  group = 'rdo-' + Math.random().toString(36).slice(2, 8);
+
+  renderVals() {
+    const truthy = (v) => v === true || v === 'true';
+    const raw = String(this.props.options ?? '')
+      .split(/[\n\r,，、;；]+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const idx = this.state.idx !== undefined ? this.state.idx : Number(this.props.value ?? 0);
+    const disabled = truthy(this.props.disabled);
+
+    return {
+      label: this.props.label ?? '',
+      hasLabel: (this.props.label ?? '') !== '',
+      groupName: this.group,
+      direction: this.props.direction === 'row' ? 'row' : 'column',
+      gap: this.props.gap ?? 12,
+      items: raw.map((t, i) => ({
+        index: i,
+        label: t,
+        checked: i === idx,
+        disabledAttr: disabled ? 'true' : 'false',
+        isDisabled: disabled,
+        pick: () => {
+          if (disabled) return;
+          this.setState({ idx: i });
+        }
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>状态标签</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.yy{--font:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC',system-ui,sans-serif}
+.bd{display:inline-flex;align-items:center;gap:5px;line-height:1.45;white-space:nowrap;border-radius:5px;font-family:var(--font);-webkit-font-smoothing:antialiased}
+.bd[data-size="sm"]{padding:1px 7px;border-radius:4px;font-size:11px}
+.bd[data-size="md"]{padding:2px 8px;border-radius:5px;font-size:11.5px}
+.bd[data-size="lg"]{padding:3px 10px;border-radius:6px;font-size:12.5px}
+.bd[data-tone="neutral"]{background:#F4F4F5;color:#52525B}
+.bd[data-tone="info"]{background:#E0F2FE;color:#0369A1}
+.bd[data-tone="warn"]{background:#FFFBEB;color:#B45309}
+.bd[data-tone="success"]{background:#F0FDF4;color:#16A34A}
+.bd[data-tone="danger"]{background:#FFF1F2;color:#BE123C}
+.bd-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex:0 0 auto}
+</style>
+</helmet>
+
+<div class="yy" style="display:inline-flex;align-items:center">
+<span class="bd" data-tone="{{ tone }}" data-size="{{ size }}">
+<sc-if value="{{ dot }}" hint-placeholder-val="{{ false }}">
+<span class="bd-dot" aria-hidden="true"></span>
+</sc-if>
+<span>{{ text }}</span>
+</span>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"text":{"editor":"text","default":"待发货","section":"内容"},"tone":{"editor":"enum","options":["neutral","info","warn","success","danger"],"default":"warn","section":"样式"},"size":{"editor":"enum","options":["sm","md","lg"],"default":"md","section":"样式"},"dot":{"editor":"boolean","default":false,"section":"样式"},"$preview":{"width":120,"height":56}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      text: this.props.text ?? '状态',
+      tone: this.props.tone ?? 'neutral',
+      size: this.props.size ?? 'md',
+      dot: this.props.dot === true || this.props.dot === 'true'
+    };
+  }
+}
+</script>
+</body>
+</html>

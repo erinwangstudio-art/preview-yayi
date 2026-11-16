@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>灵感广场</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+  <helmet>
+    <style>
+      html, body { margin: 0; height: 100%; }
+    </style>
+<style>
+body{margin:0}*{box-sizing:border-box}a{text-decoration:none;color:inherit}button{font:inherit;border:0;background:none;padding:0;cursor:pointer;color:inherit}
+.w{display:flex;min-height:1290px;background:#F4F4F5;color:#18181B;font-family:Inter,-apple-system,'PingFang SC',system-ui,sans-serif;font-size:13px;-webkit-font-smoothing:antialiased;width:1440px}
+/* 侧栏 */
+.sb{width:240px;flex:0 0 240px;background:#F7F7F8;border-right:1px solid #E4E4E7;display:flex;flex-direction:column}
+.sb-h{height:64px;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid #E9E9EB}
+.logo{width:30px;height:30px;border-radius:9px;background:#6366F1;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px}
+.sb-t{flex:1;font-size:15px;font-weight:500;color:#18181B}
+.grp{font-size:11px;color:#A1A1AA;padding:7px 20px 3px}
+.nav{display:flex;align-items:center;gap:8px;height:32px;margin:1px 10px;padding:0 10px;border-radius:8px;font-size:13px;color:#71717A;border:1px solid transparent;transition:background .14s ease,color .14s ease}
+.nav .ic{flex:0 0 auto;color:#A1A1AA;display:flex}
+.nav:hover{background:#EDEDEF;color:#18181B}
+.nav.on{background:#4F46E5;border-color:#4F46E5;color:#fff;font-weight:500}
+.nav.on .ic{color:#fff}
+.sep{height:1px;background:#E9E9EB;margin:6px 16px}
+.sb-b{margin-top:auto;padding:0 12px 14px}
+/* 主区 */
+.mn{flex:1;min-width:0;display:flex;flex-direction:column}
+.tp{height:64px;background:#fff;border-bottom:1px solid #E4E4E7;display:flex;align-items:center;gap:14px;padding:0 24px;flex:0 0 auto}
+.q{width:280px;height:36px;background:#FAFAFA;border:1px solid #E4E4E7;border-radius:8px;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13px;color:#A1A1AA}
+.ib{position:relative;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#52525B;cursor:pointer}
+.ib:hover{background:#F4F4F5}
+.dot{position:absolute;top:8px;right:8px;width:6px;height:6px;border-radius:50%;background:#F43F5E;border:1.5px solid #fff}
+.vd{width:1px;height:20px;background:#E4E4E7}
+.usr{display:flex;align-items:center;gap:9px;font-size:13px;color:#27272A;cursor:pointer}
+.av{width:32px;height:32px;border-radius:50%;background:#6366F1;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500}
+.bd{flex:1;padding:24px}
+/* 页头 */
+.hd{display:flex;align-items:flex-end;gap:12px}
+.h1{font-size:20px;font-weight:600;letter-spacing:-.2px;margin:0;color:#18181B}
+.sub{font-size:12px;color:#71717A;margin-top:5px}
+.btn{height:36px;padding:0 15px;border-radius:8px;font-size:13px;display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;transition:background .14s ease,border-color .14s ease}
+.btn.sm{height:32px;padding:0 12px;font-size:12.5px}
+.b1{background:#6366F1;border:1px solid #6366F1;color:#fff}
+.b1:hover{background:#4F46E5;border-color:#4F46E5}
+.b2{background:#fff;border:1px solid #E4E4E7;color:#18181B}
+.b2:hover{background:#FAFAFA;border-color:#D4D4D8}
+/* 平台切换 */
+.plat{margin-top:16px;background:#fff;border:1px solid #E4E4E7;border-radius:12px;padding:0 18px;height:52px;display:flex;align-items:center;gap:22px}
+.ptab{height:52px;display:inline-flex;align-items:center;font-size:13.5px;color:#71717A;border-bottom:2px solid transparent;margin-bottom:-1px;padding:0 2px;transition:color .14s ease}
+.ptab:hover{color:#18181B}
+.ptab[data-active="true"]{color:#4F46E5;font-weight:600;border-bottom-color:#6366F1}
+.src{margin-left:auto;font-size:12px;color:#A1A1AA}
+/* 筛选卡 */
+.flt{margin-top:14px;background:#fff;border:1px solid #E4E4E7;border-radius:12px;padding:16px 18px 14px}
+.frow{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.frow+.frow{margin-top:12px;padding-top:12px;border-top:1px solid #F4F4F5}
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+.lb{font-size:12px;color:#71717A;line-height:1.2}
+.sel{appearance:none;-webkit-appearance:none;height:34px;min-width:132px;padding:0 30px 0 10px;border:1px solid #E4E4E7;border-radius:8px;background:#fff;font-family:inherit;font-size:13px;color:#18181B;cursor:pointer;outline:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16' fill='none' stroke='%23A1A1AA' stroke-width='1.6' stroke-linecap='round'><path d='M4.5 6.4L8 9.9l3.5-3.5'/></svg>");background-repeat:no-repeat;background-position:right 10px center}
+.sel:hover{border-color:#D4D4D8}
+.sel:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,.14)}
+.seg{display:inline-flex;align-items:center;gap:3px;background:#F4F4F5;border-radius:9px;padding:3px}
+.seg button{height:28px;padding:0 12px;border-radius:7px;font-size:12.5px;color:#71717A;transition:background .14s ease,color .14s ease}
+.seg button:hover{color:#18181B}
+.seg button[data-active="true"]{background:#fff;color:#4F46E5;font-weight:500;box-shadow:0 1px 2px rgba(24,24,27,.08)}
+.chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chip{height:28px;padding:0 11px;border-radius:999px;border:1px solid #E4E4E7;background:#fff;color:#52525B;font-size:12.5px;display:inline-flex;align-items:center;gap:5px;transition:background .14s ease,border-color .14s ease,color .14s ease}
+.chip:hover{border-color:#A5B4FC;color:#4F46E5}
+.chip[data-on="true"]{background:#EEF2FF;border-color:#A5B4FC;color:#4F46E5;font-weight:500}
+.chip[data-on="true"]:after{content:"";width:5px;height:5px;border-radius:50%;background:#6366F1}
+.fld-lb{font-size:12px;color:#71717A;margin-right:2px}
+.frow .grow{flex:1}
+/* 工具条 */
+.tbar{margin-top:14px;background:#fff;border:1px solid #E4E4E7;border-radius:12px;height:52px;display:flex;align-items:center;gap:14px;padding:0 16px}
+.stab{height:52px;display:inline-flex;align-items:center;font-size:13px;color:#71717A;border-bottom:2px solid transparent;margin-bottom:-1px;padding:0 2px;transition:color .14s ease}
+.stab:hover{color:#18181B}
+.stab[data-active="true"]{color:#18181B;font-weight:600;border-bottom-color:#6366F1}
+.vd2{width:1px;height:18px;background:#E4E4E7}
+.selall{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#27272A}
+.ck{width:16px;height:16px;box-sizing:border-box;border-radius:4px;border:1.5px solid #D4D4D8;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;transition:background .12s ease,border-color .12s ease}
+.ck[data-sel="true"]{background:#6366F1;border-color:#6366F1}
+.ck[data-sel="true"]:after{content:"";width:8px;height:4.5px;border-left:1.6px solid #fff;border-bottom:1.6px solid #fff;transform:rotate(-45deg) translate(0.5px,-1px)}
+.selcnt{font-size:12.5px;color:#71717A}
+.selcnt b{color:#4F46E5;font-weight:600;font-variant-numeric:tabular-nums}
+/* 卡片网格 6 列 */
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:14px}
+.card{background:#fff;border:1px solid #E4E4E7;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .16s ease,border-color .16s ease,transform .16s ease}
+.card:hover{box-shadow:0 6px 18px rgba(24,24,27,.08);border-color:#D4D4D8;transform:translateY(-1px)}
+.card[data-sel="true"]{border-color:#6366F1;box-shadow:0 0 0 2px rgba(99,102,241,.16)}
+.thumb{position:relative;aspect-ratio:1/1;background:#F4F4F5;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.card:hover .thumb img{transform:scale(1.035)}
+.pick{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(24,24,27,.16)}
+.pick .ck{width:14px;height:14px;border-radius:3.5px}
+.cat{position:absolute;left:8px;bottom:8px;height:20px;padding:0 7px;border-radius:5px;background:rgba(24,24,27,.62);color:#fff;font-size:11px;display:inline-flex;align-items:center;backdrop-filter:blur(2px)}
+.meta{padding:9px 10px 10px;display:flex;flex-direction:column;gap:5px}
+.r2{display:flex;align-items:flex-end;gap:10px}
+.r2>div{display:flex;flex-direction:column;gap:1px;min-width:0}
+.k{font-size:11px;color:#A1A1AA;line-height:1.3;white-space:nowrap}
+.v{font-size:13.5px;color:#18181B;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.2}
+.trow{display:flex;gap:4px;flex-wrap:wrap;margin-top:1px}
+.tag{height:19px;padding:0 6px;border-radius:5px;background:#F4F4F5;color:#52525B;font-size:11px;display:inline-flex;align-items:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kv{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11.5px}
+.kv .v2{color:#27272A;font-variant-numeric:tabular-nums}
+.risk{display:inline-flex;align-items:center;gap:4px;font-size:11.5px}
+.risk:before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+.risk[data-risk="safe"]{color:#16A34A}
+.risk[data-risk="none"]{color:#A1A1AA}
+.risk[data-risk="warn"]{color:#B45309}
+.catbar{margin-top:auto;padding:0 10px 10px}
+.catbar span{display:block;height:24px;border-radius:6px;background:#FAFAFA;border:1px solid #F0F0F1;color:#71717A;font-size:11.5px;display:flex;align-items:center;justify-content:center;gap:4px}
+/* 分页 */
+.pager{margin-top:16px;display:flex;align-items:center;gap:8px;font-size:12.5px;color:#71717A}
+.pager .tot{margin-right:6px}
+.pbtn{min-width:30px;height:30px;padding:0 8px;border:1px solid #E4E4E7;border-radius:7px;background:#fff;color:#52525B;font-size:12.5px;display:inline-flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+.pbtn:hover{border-color:#A5B4FC;color:#4F46E5}
+.pbtn[data-active="true"]{background:#6366F1;border-color:#6366F1;color:#fff;font-weight:500}
+.pbtn[data-gap="true"]{border-color:transparent;background:none;cursor:default;color:#A1A1AA}
+.pbtn[data-gap="true"]:hover{border-color:transparent;color:#A1A1AA}
+.pgoto{margin-left:auto;display:flex;align-items:center;gap:6px}
+.pgoto input{width:46px;height:30px;border:1px solid #E4E4E7;border-radius:7px;text-align:center;font-family:inherit;font-size:12.5px;color:#18181B;outline:none}
+.pgoto input:focus{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,.14)}
+.psize{height:30px;border:1px solid #E4E4E7;border-radius:7px;background:#fff;padding:0 8px;font-size:12.5px;color:#52525B}
+/* ===== 开发说明层 ===== */
+.w{position:relative}
+.plat,.flt,.tbar,.grid,.pager{position:relative}
+.pin{position:absolute;top:-11px;left:-11px;width:24px;height:24px;border-radius:50%;background:#18181B;color:#fff;font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(24,24,27,.28);border:2px solid #fff;z-index:30}
+.btn[data-docs-on="true"]{background:#18181B;border-color:#18181B;color:#fff}
+.rail{position:absolute;top:76px;right:0;bottom:0;width:404px;padding:0 24px 24px 0;display:flex;flex-direction:column;gap:12px;z-index:40;pointer-events:none}
+.note{pointer-events:auto;background:#fff;border:1px solid #E4E4E7;border-radius:10px;padding:11px 12px;display:flex;gap:10px;box-shadow:0 6px 18px rgba(24,24,27,.10);transition:border-color .14s ease,box-shadow .14s ease}
+.note[data-hl="true"]{border-color:#6366F1;box-shadow:0 0 0 3px rgba(99,102,241,.14),0 6px 18px rgba(24,24,27,.10)}
+.note.head{background:#18181B;border-color:#18181B;color:#fff}
+.note.head b{font-size:13px;display:block}
+.note.head .s{display:block;font-size:11px;color:#A1A1AA;margin-top:3px;line-height:1.5}
+.dno{width:22px;height:22px;border-radius:50%;background:#18181B;color:#fff;font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.note[data-hl="true"] .dno{background:#6366F1}
+.note .tx b{display:block;font-size:12.5px;font-weight:600;color:#18181B;margin-bottom:3px}
+.note .tx p.pl{margin:0;font-size:11.5px;color:#52525B;line-height:1.6;white-space:pre-line}
+.docs-x{margin-left:auto;width:26px;height:26px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;color:#A1A1AA;flex:0 0 auto}
+.docs-x:hover{background:rgba(255,255,255,.14);color:#fff}
+</style>
+  </helmet>
+<div class="rail" aria-label="开发说明" style="position: absolute; left: 0px; top: 0px; right: auto; bottom: auto; margin: 0px; box-sizing: border-box; width: 404px;">
+    <div class="note head">
+      <div style="flex:1"><b>{{ docTitle }}</b><span class="s">每张说明卡是独立元素：选中哪张卡，右侧 Tweaks 面板就只编辑这张卡的标题和正文 · 换行＝分段</span></div>
+      <button class="docs-x" type="button" onClick="{{ toggleDocs }}" aria-label="隐藏开发说明"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"></path></svg></button>
+    </div>
+    <div class="note" data-hl="{{ f1 }}"><span class="dno">1</span><div class="tx"><b>{{ doc1T }}</b><p class="pl">{{ doc1B }}</p></div></div>
+    <div class="note" data-hl="{{ f2 }}"><span class="dno">2</span><div class="tx"><b>{{ doc2T }}</b><p class="pl">{{ doc2B }}</p></div></div>
+    <div class="note" data-hl="{{ f3 }}"><span class="dno">3</span><div class="tx"><b>{{ doc3T }}</b><p class="pl">{{ doc3B }}</p></div></div>
+    <div class="note" data-hl="{{ f4 }}"><span class="dno">4</span><div class="tx"><b>{{ doc4T }}</b><p class="pl">{{ doc4B }}</p></div></div>
+    <div class="note" data-hl="{{ f5 }}"><span class="dno">5</span><div class="tx"><b>{{ doc5T }}</b><p class="pl">{{ doc5B }}</p></div></div>
+  </div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;docTitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;开发说明 · 数据口径&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc1T&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;数据来源与获取 · 平台切换&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc1B&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;平台切换（Temu / Shein）即列表查询的 platform 参数，切换后整页重新拉取，右上数据源文案同步更新（“近 90 天”为采集快照窗口）。\n\n图案数据三路入库：\na) 定时采集任务抓取平台商品图并裁切图案区；\nc) AI 生图产物回流（自动带生图记录）。\n&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc2T&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;筛选维度与字段口径&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc2B&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;11 组筛选与列表字段一一对应：来源、店铺类型、品类一级 / 末级（级联联动）、图案款次区间、是否使用、总销量区间、首次上架时间、logo 标签、生图记录、图案元素（chip 多选）、侵权结果（chip 多选）。\n元素标签＝图像识别自动打标 + 人工修正，是元素筛选与推荐的主要口径。行内多选为 OR，行与行之间为 AND；「查询」触发请求，「重置」清空全部条件。&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc3T&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;排序 · 批量选择 · 操作出口&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc3B&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;排序三档：最新上架（首次上架时间降序）/ 销量最高（总销量降序）/ 出现频次最高（款次降序）。\n全选仅作用于当前页；「已选 N 项」为会话级跨页累计。批量操作均作用于选中集合：设置 logo 标签＝批量写入标记；AI 生图＝携带所选图案为参考图跳转生图工具；加入工作流＝进入图案处理流程；页头「导出选中」＝原图 + 元数据打包。&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc4T&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;图案卡 · 同款聚合口径（核心）&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc4B&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;一张卡＝一个同款图案聚合主记录：以主视觉特征向量去重，同款多链接合并为一条。\n总销量＝同款各在售链接销量之和；图案款次＝同款在售链接 / 变体数；元素标签＝识别标签（展示前 2 个）；侵权类型＝「风险检测 · 侵权检测」任务异步回写（绿＝未侵权 / 灰＝未检测）；生图记录＝以该图案为参考图的 AI 生图次数；首次上架＝同款最早链接上架日；底部灰条＝品类路径（一级 · 末级）。&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc5T&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;分页与勾选保留&quot;,&quot;section&quot;:&quot;开发说明&quot;},&quot;doc5B&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;服务端分页，默认 120 条 / 页（可选 60 / 240）；页码跳转校验 1–84；翻页后勾选保留（会话级），刷新页面即清空。&quot;,&quot;section&quot;:&quot;开发说明&quot;}}">
+const CARDS = [
+  { id: 1,  img: 'images/pattern-01.jpg', title: '涂鸦艺术字', sales: '12.4万', uses: 38, tag1: '艺术字', tag2: '涂鸦', risk: '未侵权', riskKey: 'safe', gen: 12, date: '2026-08-12', badge: '艺术字', catLine: '艺术字 · 涂鸦' },
+  { id: 2,  img: 'images/pattern-02.jpg', title: '柯基卡通', sales: '8.6万',  uses: 26, tag1: '动物', tag2: '卡通', risk: '未侵权', riskKey: 'safe', gen: 5,  date: '2026-09-03', badge: '动物', catLine: '动物 · 卡通' },
+  { id: 3,  img: 'images/pattern-03.jpg', title: '热带棕榈叶', sales: '15.2万', uses: 44, tag1: '自然风光', tag2: '热带', risk: '未检测', riskKey: 'none', gen: 18, date: '2026-07-21', badge: '自然风光', catLine: '自然风光 · 热带' },
+  { id: 4,  img: 'images/pattern-04.jpg', title: '孟菲斯几何', sales: '6.1万',  uses: 19, tag1: '几何图形', tag2: '复古', risk: '未侵权', riskKey: 'safe', gen: 3,  date: '2026-09-28', badge: '几何图形', catLine: '几何图形 · 复古' },
+  { id: 5,  img: 'images/pattern-05.jpg', title: '水彩野花', sales: '9.8万',  uses: 31, tag1: '花卉', tag2: '水彩', risk: '未侵权', riskKey: 'safe', gen: 8,  date: '2026-08-05', badge: '花卉', catLine: '花卉 · 水彩' },
+  { id: 6,  img: 'images/pattern-06.jpg', title: '蓝闪蝶', sales: '21.6万', uses: 57, tag1: '蝴蝶', tag2: '昆虫', risk: '未侵权', riskKey: 'safe', gen: 24, date: '2026-06-14', badge: '蝴蝶', catLine: '蝴蝶 · 昆虫' },
+  { id: 7,  img: 'images/pattern-07.jpg', title: '圣诞驯鹿', sales: '4.3万',  uses: 12, tag1: '节日', tag2: '圣诞', risk: '未检测', riskKey: 'none', gen: 2,  date: '2026-10-02', badge: '节日', catLine: '节日 · 圣诞' },
+  { id: 8,  img: 'images/pattern-08.jpg', title: '青海波', sales: '7.7万',  uses: 22, tag1: '条纹', tag2: '日式', risk: '未侵权', riskKey: 'safe', gen: 6,  date: '2026-09-11', badge: '条纹', catLine: '条纹 · 日式' },
+  { id: 9,  img: 'images/pattern-09.jpg', title: 'Y2K 星星', sales: '18.9万', uses: 49, tag1: '星空', tag2: 'Y2K', risk: '未侵权', riskKey: 'safe', gen: 31, date: '2026-07-30', badge: '星空', catLine: '星空 · Y2K' },
+  { id: 10, img: 'images/pattern-10.jpg', title: '草莓甜心', sales: '11.2万', uses: 28, tag1: '水果', tag2: '卡通', risk: '未侵权', riskKey: 'safe', gen: 9,  date: '2026-08-19', badge: '水果', catLine: '水果 · 卡通' },
+  { id: 11, img: 'images/pattern-11.jpg', title: '经典豹纹', sales: '13.5万', uses: 35, tag1: '动物纹', tag2: '轻奢', risk: '未检测', riskKey: 'none', gen: 14, date: '2026-08-01', badge: '动物纹', catLine: '动物纹 · 轻奢' },
+  { id: 12, img: 'images/pattern-12.jpg', title: '学院格纹', sales: '5.4万',  uses: 16, tag1: '条纹', tag2: '学院', risk: '未侵权', riskKey: 'safe', gen: 4,  date: '2026-09-22', badge: '条纹', catLine: '条纹 · 学院' }
+];
+const ELEM_LABELS = ['艺术字', '动物', '花卉', '几何图形', '自然风光', '蝴蝶', '节日', '星空'];
+
+class Component extends DCLogic {
+  state = { platform: 'temu', sort: 'new', sel: [], page: 1, use: 2, elems: [], risks: [], docs: true, docFocus: 0 };
+
+  selList() { return this.state.sel || []; }
+
+  toggleCard(id) {
+    const sel = this.selList().slice();
+    const i = sel.indexOf(id);
+    if (i >= 0) sel.splice(i, 1); else sel.push(id);
+    this.setState({ sel });
+  }
+
+  toggleAll() {
+    const all = this.selList().length === CARDS.length;
+    this.setState({ sel: all ? [] : CARDS.map((c) => c.id) });
+  }
+
+  toggleFrom(listName, label) {
+    const list = (this.state[listName] || []).slice();
+    const i = list.indexOf(label);
+    if (i >= 0) list.splice(i, 1); else list.push(label);
+    this.setState({ [listName]: list });
+  }
+
+  goPage(n) {
+    const p = Math.max(1, Math.min(84, n));
+    this.setState({ page: p });
+  }
+
+  renderVals() {
+    const st = this.state;
+    const sel = this.selList();
+    const sort = st.sort;
+
+    const plats = [
+      { label: 'Temu', active: st.platform === 'temu', pick: () => this.setState({ platform: 'temu' }) },
+      { label: 'Shein', active: st.platform === 'shein', pick: () => this.setState({ platform: 'shein' }) }
+    ];
+    const sorts = [
+      { label: '最新上架', active: sort === 'new', pick: () => this.setState({ sort: 'new' }) },
+      { label: '销量最高', active: sort === 'sales', pick: () => this.setState({ sort: 'sales' }) },
+      { label: '出现频次最高', active: sort === 'freq', pick: () => this.setState({ sort: 'freq' }) }
+    ];
+    const uses = [
+      { label: '全部', active: st.use === 0, pick: () => this.setState({ use: 0 }) },
+      { label: '已使用', active: st.use === 1, pick: () => this.setState({ use: 1 }) },
+      { label: '未使用', active: st.use === 2, pick: () => this.setState({ use: 2 }) }
+    ];
+    const elems = ELEM_LABELS.map((label) => ({
+      label,
+      on: (st.elems || []).indexOf(label) >= 0,
+      pick: () => this.toggleFrom('elems', label)
+    }));
+    const risks = ['未侵权', '未检测', '检测中'].map((label) => ({
+      label,
+      on: (st.risks || []).indexOf(label) >= 0,
+      pick: () => this.toggleFrom('risks', label)
+    }));
+
+    const cards = CARDS.map((c) => ({
+      img: c.img,
+      title: c.title,
+      sales: c.sales,
+      uses: c.uses + ' 款',
+      tag1: c.tag1,
+      tag2: c.tag2,
+      risk: c.risk,
+      riskKey: c.riskKey,
+      gen: c.gen > 0 ? c.gen + ' 次' : '—',
+      date: c.date,
+      badge: c.badge,
+      catLine: c.catLine,
+      sel: sel.indexOf(c.id) >= 0,
+      toggle: () => this.toggleCard(c.id)
+    }));
+
+    const pageLabels = [1, 2, 3, 4, 5, 6, '…', 84];
+    const pages = pageLabels.map((p) => ({
+      label: String(p),
+      gap: p === '…',
+      active: p === st.page,
+      pick: () => { if (p !== '…') this.goPage(Number(p)); }
+    }));
+
+    return {
+      docsOn: !!st.docs,
+      docsOnAttr: st.docs ? 'true' : 'false',
+      docTitle: String(this.props.docTitle ?? ''),
+      f1: st.docFocus === 1 ? 'true' : 'false',
+      f2: st.docFocus === 2 ? 'true' : 'false',
+      f3: st.docFocus === 3 ? 'true' : 'false',
+      f4: st.docFocus === 4 ? 'true' : 'false',
+      f5: st.docFocus === 5 ? 'true' : 'false',
+      toggleDocs: () => this.setState({ docs: !st.docs, docFocus: 0 }),
+      pin1: () => this.setState({ docs: true, docFocus: 1 }),
+      pin2: () => this.setState({ docs: true, docFocus: 2 }),
+      pin3: () => this.setState({ docs: true, docFocus: 3 }),
+      pin4: () => this.setState({ docs: true, docFocus: 4 }),
+      pin5: () => this.setState({ docs: true, docFocus: 5 }),
+      plats,
+      sourceText: st.platform === 'temu' ? '数据源：Temu 全站图案 · 近 90 天' : '数据源：Shein 全站图案 · 近 90 天',
+      sorts,
+      uses,
+      elems,
+      risks,
+      cards,
+      selCount: sel.length,
+      allSel: sel.length === CARDS.length && CARDS.length > 0,
+      toggleAll: () => this.toggleAll(),
+      pages,
+      pageNo: String(st.page),
+      prevPage: () => this.goPage(st.page - 1),
+      nextPage: () => this.goPage(st.page + 1)
+    };
+  }
+}
+</script>
+</body>
+</html>

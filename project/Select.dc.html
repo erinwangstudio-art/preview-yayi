@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>下拉框</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.yy{--p:#6366F1;--ph:#4F46E5;--ink:#18181B;--ink2:#27272A;--muted:#71717A;--faint:#A1A1AA;--line:#E4E4E7;--line2:#D4D4D8;--bg2:#FAFAFA;--font:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC',system-ui,sans-serif}
+.sl{position:relative;width:100%;box-sizing:border-box;font-family:var(--font);-webkit-font-smoothing:antialiased}
+.sl-trigger{width:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:0 11px;border:1px solid var(--line);border-radius:8px;background:#FFFFFF;font-family:inherit;text-align:left;line-height:1;cursor:pointer;transition:border-color .14s ease,box-shadow .14s ease}
+.sl-trigger[data-size="sm"]{height:28px;font-size:12px}
+.sl-trigger[data-size="md"]{height:32px;font-size:12.5px}
+.sl-trigger[data-size="lg"]{height:38px;font-size:13.5px}
+.sl-trigger:hover{border-color:var(--line2)}
+.sl-trigger[data-open="true"]{border-color:var(--p);box-shadow:0 0 0 3px rgba(99,102,241,.14)}
+.sl-trigger:focus-visible{outline:2px solid var(--p);outline-offset:2px}
+.sl-trigger[data-disabled="true"]{background:#FAFAFA;opacity:.7;cursor:not-allowed}
+.sl-val{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.sl-val[data-empty="true"]{color:var(--faint)}
+.sl-arrow{flex:0 0 auto;transition:transform .14s ease;color:var(--faint)}
+.sl-trigger[data-open="true"] .sl-arrow{transform:rotate(180deg)}
+.sl-pop{position:absolute;top:calc(100% + 6px);left:0;min-width:100%;box-sizing:border-box;background:#FFFFFF;border:1px solid #E4E4E7;border-radius:8px;box-shadow:0 8px 24px rgba(24,24,27,.12);padding:4px;z-index:40;max-height:264px;overflow-y:auto;animation:sl-in .12s ease}
+@keyframes sl-in{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+.sl-opt{width:100%;height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 10px;border:0;border-radius:6px;background:none;font-family:inherit;font-size:12.5px;color:#27272A;text-align:left;white-space:nowrap;cursor:pointer}
+.sl-opt:hover,.sl-opt[data-hi="true"]{background:var(--bg2)}
+.sl-opt[data-active="true"]{color:#4F46E5;font-weight:500}
+.sl-opt[data-active="true"] .sl-tick{opacity:1}
+.sl-opt:focus-visible{outline:2px solid var(--p);outline-offset:-2px}
+.sl-tick{opacity:0;flex:0 0 auto;color:var(--p)}
+@media (prefers-reduced-motion:reduce){.sl-arrow{transition:none}.sl-pop{animation:none}}
+</style>
+</helmet>
+
+<div class="yy" style="position:relative;width:{{ w }}px">
+
+<div class="sl" onBlur="{{ onBlur }}">
+
+<button class="sl-trigger" id="{{ uid }}-trigger" type="button" role="combobox" aria-haspopup="listbox" aria-expanded="{{ openAttr }}" aria-controls="{{ listId }}" aria-activedescendant="{{ activeDesc }}" aria-label="{{ ariaLabel }}" data-size="{{ size }}" data-open="{{ openAttr }}" data-disabled="{{ disabledAttr }}" disabled="{{ isDisabled }}" onClick="{{ toggle }}" onKeyDown="{{ onKey }}">
+<span class="sl-val" data-empty="{{ emptyAttr }}">{{ label }}</span>
+<svg class="sl-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.4 4 5 6.6 7.6 4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+
+<sc-if value="{{ open }}" hint-placeholder-val="{{ false }}">
+<div class="sl-pop" id="{{ listId }}" role="listbox" aria-label="{{ ariaLabel }}">
+<sc-for list="{{ list }}" as="item" hint-placeholder-count="3">
+<button class="sl-opt" type="button" role="option" id="{{ item.id }}" aria-selected="{{ item.active }}" data-active="{{ item.active }}" data-hi="{{ item.hi }}" tabindex="-1" onClick="{{ item.pick }}" onMouseDown="{{ item.hold }}" onMouseEnter="{{ item.hover }}">
+<span>{{ item.label }}</span>
+<svg class="sl-tick" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3.4 8.4 6.6 11.6 12.6 4.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+</sc-for>
+<sc-if value="{{ noOptions }}">
+<div style="padding:10px;font-size:12.5px;color:var(--faint);text-align:center">无可选项</div>
+</sc-if>
+</div>
+</sc-if>
+
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"options":{"editor":"text","default":"全部渠道,天猫,抖音,独立站,小红书","section":"内容"},"label":{"editor":"text","default":"全部渠道","section":"内容"},"placeholder":{"editor":"text","default":"请选择","section":"内容"},"value":{"editor":"text","default":"","section":"内容"},"w":{"editor":"int","default":168,"min":88,"max":420,"unit":"px","section":"样式"},"size":{"editor":"enum","options":["sm","md","lg"],"default":"md","section":"样式"},"disabled":{"editor":"boolean","default":false,"section":"状态"},"$preview":{"width":168,"height":120}}'>
+class Component extends DCLogic {
+  state = {};
+
+  uid = 'sl-' + Math.random().toString(36).slice(2, 8);
+
+  parse() {
+    return String(this.props.options ?? '')
+      .split(/[\n\r,，、;；]+/)
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .map((s, i) => {
+        const parts = s.split(':').map((x) => x.trim());
+        return { label: parts[0], val: parts[1] || parts[0], key: i };
+      });
+  }
+
+  focusTrigger() {
+    if (typeof document === 'undefined') return;
+    const el = document.getElementById(this.uid + '-trigger');
+    if (el) el.focus();
+  }
+
+  renderVals() {
+    const truthy = (v) => v === true || v === 'true';
+    const list = this.parse();
+    const selected = this.state.value !== undefined ? this.state.value : (this.props.value ?? '');
+    const curIdx = list.findIndex((x) => x.val === selected);
+    const cur = curIdx >= 0 ? list[curIdx] : null;
+    const disabled = truthy(this.props.disabled);
+    const open = this.state.open === true && !disabled;
+    const hi = this.state.hi !== undefined ? this.state.hi : (curIdx >= 0 ? curIdx : 0);
+    const size = ['sm', 'md', 'lg'].includes(this.props.size) ? this.props.size : 'md';
+    const uid = this.uid;
+    const listId = uid + '-list';
+
+    const close = () => this.setState({ open: false });
+
+    const choose = (i) => {
+      const item = list[i];
+      if (!item) return;
+      this.setState({ open: false, value: item.val });
+      if (typeof this.props.onSelect === 'function') this.props.onSelect(item.val, item);
+      setTimeout(() => this.focusTrigger(), 0);
+    };
+
+    const moveHi = (next) => {
+      if (!list.length) return;
+      const n = (next + list.length) % list.length;
+      this.setState({ hi: n, open: true });
+    };
+
+    return {
+      uid,
+      listId,
+      ariaLabel: this.props.label || this.props.placeholder || '下拉选择',
+      open,
+      openAttr: open ? 'true' : 'false',
+      activeDesc: open && list[hi] ? `${uid}-opt-${hi}` : undefined,
+      disabled,
+      isDisabled: disabled,
+      disabledAttr: disabled ? 'true' : 'false',
+      size,
+      w: this.props.w ?? 168,
+      label: cur ? cur.label : (this.props.placeholder || this.props.label || '请选择'),
+      emptyAttr: cur ? 'false' : 'true',
+      noOptions: list.length === 0,
+      list: list.map((x, i) => ({
+        ...x,
+        id: `${uid}-opt-${i}`,
+        active: x.val === selected,
+        hi: i === hi,
+        pick: () => choose(i),
+        hold: (e) => e.preventDefault(),
+        hover: () => { if (hi !== i) this.setState({ hi: i }); }
+      })),
+      toggle: () => {
+        if (disabled) return;
+        this.setState({ open: !open, hi: curIdx >= 0 ? curIdx : 0 });
+      },
+      onBlur: (e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) close();
+      },
+      onKey: (e) => {
+        if (disabled) return;
+        const k = e.key;
+        if (k === 'Enter' || k === ' ' || k === 'Spacebar') {
+          e.preventDefault();
+          if (!open) this.setState({ open: true, hi: curIdx >= 0 ? curIdx : 0 });
+          else choose(hi);
+        } else if (k === 'ArrowDown') {
+          e.preventDefault();
+          open ? moveHi(hi + 1) : this.setState({ open: true, hi: curIdx >= 0 ? curIdx : 0 });
+        } else if (k === 'ArrowUp') {
+          e.preventDefault();
+          open ? moveHi(hi - 1) : this.setState({ open: true, hi: curIdx >= 0 ? curIdx : (list.length - 1) });
+        } else if (k === 'Home') {
+          if (open) { e.preventDefault(); this.setState({ hi: 0 }); }
+        } else if (k === 'End') {
+          if (open) { e.preventDefault(); this.setState({ hi: list.length - 1 }); }
+        } else if (k === 'Escape') {
+          if (open) { e.preventDefault(); close(); }
+        } else if (k === 'Tab') {
+          if (open) close();
+        } else if (k.length === 1 && /\S/.test(k)) {
+          const q = k.toLowerCase();
+          const start = open ? hi + 1 : 0;
+          for (let n = 0; n < list.length; n++) {
+            const i = (start + n) % list.length;
+            if (list[i].label.toLowerCase().startsWith(q)) {
+              this.setState({ open: true, hi: i });
+              break;
+            }
+          }
+        }
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

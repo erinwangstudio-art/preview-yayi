@@ -1,0 +1,227 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AdminNav-oz79.dc.html": {
+      "h": 800,
+      "page": "components",
+      "title": "AdminNav copy",
+      "w": 240,
+      "x": 0,
+      "y": -64
+    },
+    "Badge.dc.html": {
+      "h": 56,
+      "is_interactive": true,
+      "page": "components",
+      "title": "状态标签 · 5 色",
+      "w": 120,
+      "x": 320,
+      "y": 56
+    },
+    "Button.dc.html": {
+      "h": 64,
+      "is_interactive": true,
+      "page": "components",
+      "title": "按钮 · 4 变体",
+      "w": 120,
+      "x": 320,
+      "y": -64
+    },
+    "Checkbox.dc.html": {
+      "h": 160,
+      "is_interactive": true,
+      "page": "components",
+      "title": "多选 · 可勾选",
+      "w": 200,
+      "x": 0,
+      "y": 1030
+    },
+    "DatePicker.dc.html": {
+      "h": 96,
+      "is_interactive": true,
+      "page": "components",
+      "title": "日期选择器 · 可点",
+      "w": 280,
+      "x": 0,
+      "y": 1230
+    },
+    "Input.dc.html": {
+      "h": 76,
+      "is_interactive": true,
+      "page": "components",
+      "title": "输入框 · 可输入",
+      "w": 280,
+      "x": 600,
+      "y": 230
+    },
+    "InspirePlaza.dc.html": {
+      "h": 1290,
+      "is_interactive": true,
+      "page": "inspire",
+      "title": "灵感广场 · 图案素材库",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "InspireModals.dc.html": {
+      "h": 590,
+      "page": "inspire",
+      "title": "灵感广场 · 弹窗陈列（评审用）",
+      "w": 1440,
+      "x": 0,
+      "y": 1390
+    },
+    "MultiSelect.dc.html": {
+      "h": 96,
+      "is_interactive": true,
+      "page": "components",
+      "title": "下拉多选 · 可点",
+      "w": 280,
+      "x": 0,
+      "y": 1366
+    },
+    "Piece-b1ik.dc.html": {
+      "frameless": true,
+      "h": 915,
+      "page": "inspire",
+      "title": "Box",
+      "w": 404,
+      "x": 1478,
+      "y": 61
+    },
+    "Radio.dc.html": {
+      "h": 150,
+      "is_interactive": true,
+      "page": "components",
+      "title": "单选 · 可切换",
+      "w": 200,
+      "x": 0,
+      "y": 840
+    },
+    "Select.dc.html": {
+      "h": 120,
+      "is_interactive": true,
+      "page": "components",
+      "title": "下拉框 · 可配选项",
+      "w": 168,
+      "x": 320,
+      "y": 340
+    },
+    "Table.dc.html": {
+      "h": 240,
+      "is_interactive": true,
+      "page": "components",
+      "title": "数据表格 · 可增删行列",
+      "w": 480,
+      "x": 0,
+      "y": 1502
+    },
+    "Tabs.dc.html": {
+      "h": 48,
+      "is_interactive": true,
+      "page": "components",
+      "title": "标签页 · 可配项 + 切换",
+      "w": 343,
+      "x": 548,
+      "y": 64
+    },
+    "Toggle.dc.html": {
+      "h": 56,
+      "is_interactive": true,
+      "page": "components",
+      "title": "开关 · 可点",
+      "w": 120,
+      "x": 320,
+      "y": 230
+    },
+    "YayiHome.dc.html": {
+      "h": 960,
+      "page": "home",
+      "title": "工作台首页 · 靛紫规范",
+      "w": 1440,
+      "x": -693,
+      "y": 662
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-11-01T14:28:39Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "page": "home",
+    "view": "canvas"
+  },
+  "noteOrder": [
+    "sec-components",
+    "hint-kit",
+    "hint-nav",
+    "note-0l7a2h"
+  ],
+  "notes": {
+    "hint-kit": {
+      "page": "components",
+      "text": "组件库：这一页只放可复用组件，页面页只放页面，互不混。用法都是一行引用：\n<dc-import name=\"Badge\" text=\"待发货\" tone=\"warn\"></dc-import>\n选中任意组件 → 右侧 Tweaks 面板改内容与样式，不用碰代码。",
+      "w": 440,
+      "x": 920,
+      "y": 0
+    },
+    "hint-nav": {
+      "page": "components",
+      "text": "菜单板是全站菜单的唯一来源。双击改文字、复制一行加菜单、改 href 指向目标页面，改完所有页面同步。",
+      "w": 440,
+      "x": 920,
+      "y": 300
+    },
+    "note-0l7a2h": {
+      "page": "home",
+      "text": "",
+      "w": 240,
+      "x": 1346,
+      "y": -328
+    },
+    "sec-components": {
+      "kind": "title1",
+      "maxW": 1500,
+      "page": "components",
+      "text": "00 组件库 ▸ 取用",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    }
+  },
+  "order": [
+    "Tabs.dc.html",
+    "Button.dc.html",
+    "Badge.dc.html",
+    "Toggle.dc.html",
+    "Input.dc.html",
+    "Select.dc.html",
+    "Radio.dc.html",
+    "Checkbox.dc.html",
+    "DatePicker.dc.html",
+    "MultiSelect.dc.html",
+    "Table.dc.html",
+    "AdminNav-oz79.dc.html",
+    "YayiHome.dc.html",
+    "InspirePlaza.dc.html",
+    "InspireModals.dc.html",
+    "Piece-b1ik.dc.html"
+  ],
+  "pages": [
+    {
+      "id": "home",
+      "name": "首页"
+    },
+    {
+      "id": "inspire",
+      "name": "灵感广场"
+    },
+    {
+      "id": "components",
+      "name": "00 组件库 ▸ 取用"
+    }
+  ],
+  "title": "Yayi Design"
+}
